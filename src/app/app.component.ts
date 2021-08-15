@@ -5,7 +5,9 @@ import { Component } from '@angular/core';
     template: `
         <app-header></app-header>
         <mat-sidenav-container class="example-container">
-            <mat-sidenav #sidenav mode="side" [opened]="true" position="end"> Sidenav content </mat-sidenav>
+            <mat-sidenav #sidenav mode="side" [opened]="true" position="end">
+                <app-sidebar></app-sidebar>
+            </mat-sidenav>
             <mat-sidenav-content>
                 <router-outlet></router-outlet>
             </mat-sidenav-content>

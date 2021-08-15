@@ -1,15 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+    selector: 'app-home-page',
+    template: `
+        <main>
+            <h1>Home Page</h1>
+            <div>Current month: {{ currentMonth }}</div>
+            <div class="summary-cards">
+                <mat-card>
+                    <mat-card-title>Wpływy</mat-card-title>
+                    <mat-card-content>content</mat-card-content>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-title>Wydatki</mat-card-title>
+                    <mat-card-content>content</mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>+/-</mat-card-title>
+                    <mat-card-content>content</mat-card-content>
+                </mat-card>
+            </div>
+        </main>
+    `,
+    styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class HomePageComponent {
+    private readonly today = new Date();
+    currentMonth = this.today.toLocaleString('default', { month: 'long' });
 }
