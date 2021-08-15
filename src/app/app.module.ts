@@ -8,9 +8,10 @@ import { HeaderComponent } from './header/header.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AppMaterialModule } from './app-material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { YearSummaryPageComponent } from './year-summary-page/year-summary-page.component';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent],
+    declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent, YearSummaryPageComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, AppMaterialModule],
     providers: [],
     bootstrap: [AppComponent],

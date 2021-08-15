@@ -4,21 +4,20 @@ import { Component } from '@angular/core';
     selector: 'app-home-page',
     template: `
         <main>
-            <h1>Home Page</h1>
-            <div>Current month: {{ currentMonth }}</div>
+            <h2>Aktualny miesiac: {{ currentMonth }} {{ currentYear }}</h2>
             <div class="summary-cards">
-                <mat-card>
+                <mat-card class="color-green">
                     <mat-card-title>Wpływy</mat-card-title>
-                    <mat-card-content>content</mat-card-content>
+                    <mat-card-content>{{ income }}</mat-card-content>
                 </mat-card>
 
-                <mat-card>
+                <mat-card class="color-red">
                     <mat-card-title>Wydatki</mat-card-title>
-                    <mat-card-content>content</mat-card-content>
+                    <mat-card-content>-{{ expense }}</mat-card-content>
                 </mat-card>
-                <mat-card>
+                <mat-card [ngClass]="result > 0 ? 'color-green' : 'color-red'">
                     <mat-card-title>+/-</mat-card-title>
-                    <mat-card-content>content</mat-card-content>
+                    <mat-card-content>{{ result }}</mat-card-content>
                 </mat-card>
             </div>
         </main>
@@ -28,4 +27,9 @@ import { Component } from '@angular/core';
 export class HomePageComponent {
     private readonly today = new Date();
     currentMonth = this.today.toLocaleString('default', { month: 'long' });
+    currentYear = this.today.getFullYear();
+
+    income = 2000;
+    expense = 1000;
+    result = this.income - this.expense;
 }

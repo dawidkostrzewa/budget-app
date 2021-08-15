@@ -2,7 +2,16 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-sidebar',
-    template: `Sidebar`,
+    template: `<aside>
+        <h2 class="sidebar-title">Ostatnie transakcje</h2>
+        <mat-list>
+            <mat-list-item>Wydatek1</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Wydatek2</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Wydatek3</mat-list-item>
+        </mat-list>
+    </aside>`,
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {

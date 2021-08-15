@@ -4,8 +4,11 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-header',
     template: `
         <mat-toolbar color="primary">
-            <span>DK budget app</span>
-            <span class="example-spacer"></span>
+            <header class="main-header">
+                <h1 class="header-title"><a routerLink="/">DK budget app</a></h1>
+                <span class="example-spacer"></span>
+                <a routerLink="/year-summary">Podsumowanie roku</a>
+            </header>
         </mat-toolbar>
     `,
     styleUrls: ['./header.component.scss']
