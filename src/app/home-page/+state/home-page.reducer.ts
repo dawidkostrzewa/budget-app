@@ -1,11 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { increment } from './home-page.actions';
+import { Transaction } from './home-page.model';
+import { HomePageActions } from './home-page.actions';
 
 export const HOME_PAGE_FEATURE = 'home-page';
 
 export interface IHomePageState {
     number: number;
+    transactions: Transaction[];
 }
 
 export const adapter: EntityAdapter<IHomePageState> = createEntityAdapter<IHomePageState>({
@@ -13,16 +15,20 @@ export const adapter: EntityAdapter<IHomePageState> = createEntityAdapter<IHomeP
 });
 
 export const homePageInitialState: IHomePageState = adapter.getInitialState({
-    number: 0
+    number: 0,
+    transactions: []
 });
 
 const reducer = createReducer(
     homePageInitialState,
-    on(increment, (state) => {
+    on(HomePageActions.increment, (state) => {
         return {
             ...state,
             number: state.number + 1
         };
+    }),
+    on(HomePageActions.loadTransactions, (state, { transactions }) => {
+        return { ...state, transactions: transactions };
     })
 );
 

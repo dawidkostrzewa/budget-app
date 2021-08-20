@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HomePageFacade } from './+state/home-page.facade';
+import { HomePageService } from './+state/home-page.service';
 
 @Component({
     selector: 'app-home-page',
@@ -34,11 +35,13 @@ export class HomePageComponent {
     expense = 1000;
     result = this.income - this.expense;
 
-    constructor(private readonly homePageFacade: HomePageFacade) {}
+    constructor(private readonly homePageFacade: HomePageFacade, private readonly homePageService: HomePageService) {}
 
     ngOnInit() {
         this.homePageFacade.number$.subscribe((number) => {
             this.income = number;
         });
+
+        this.homePageService.loadTransactions();
     }
 }

@@ -13,11 +13,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { YearSummaryPageComponent } from './year-summary-page/year-summary-page.component';
 import { homePageReducer, HOME_PAGE_FEATURE } from './home-page/+state/home-page.reducer';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent, YearSummaryPageComponent],
     imports: [
         BrowserModule,
+        HttpClientModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         AppMaterialModule,

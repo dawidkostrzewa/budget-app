@@ -1,0 +1,22 @@
+[
+    { "id": 1, "amount": 178, "description": "Corrosion of second degree of unspecified shoulder, sequela" },
+    { "id": 2, "amount": 117, "description": "Poisn by slctv seroton/norepineph reup inhibtr, undet, init" },
+    { "id": 3, "amount": 94, "description": "Forced land of ultralt/microlt/pwr-glider inj occ, sequela" },
+    { "id": 4, "amount": 151, "description": "Sltr-haris Type II physl fx lower end of unsp tibia, sequela" },
+    { "id": 5, "amount": 133, "description": "Poisoning by unspecified anesthetic, assault, sequela" },
+    { "id": 6, "amount": 94, "description": "Other physeal fracture of lower end of humerus, right arm" },
+    { "id": 7, "amount": 192, "description": "Oth complication of other internal prosth dev/grft, init" },
+    { "id": 8, "amount": 4, "description": "Sltr-haris Type I physeal fx upper end of right femur, init" },
+    { "id": 9, "amount": 2, "description": "Rheumatoid bursitis, vertebrae" },
+    { "id": 10, "amount": 21, "description": "Military firearm discharge, undetermined intent" },
+    { "id": 11, "amount": 69, "description": "Encntr for suprvsn of normal pregnancy, unsp, unsp trimester" },
+    { "id": 12, "amount": 12, "description": "Intentional self-harm by oth gas, air or spring-operated gun" },
+    { "id": 13, "amount": 35, "description": "Nondisp fx of dist phalanx of r lit fngr, 7thG" },
+    { "id": 14, "amount": 188, "description": "Underdosing of appetite depressants" },
+    { "id": 15, "amount": 19, "description": "Parasympathomimetics" },
+    { "id": 16, "amount": 5, "description": "Radiculopathy" },
+    { "id": 17, "amount": 10, "description": "Myoadenylate deaminase deficiency" },
+    { "id": 18, "amount": 21, "description": "Motorcycle driver injured in collision w hv veh in traf" },
+    { "id": 19, "amount": 104, "description": "Recurrent dislocation, right hip" },
+    { "id": 20, "amount": 177, "description": "Nondisp fx of body of scapula, r shldr, 7thG" }
+]
