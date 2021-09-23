@@ -5,7 +5,7 @@ export const increment = createAction('[Counter Component] Increment');
 
 const loadTransactions = createAction('[Transactions] Load transactions', props<{ transactions: Transaction[] }>());
 
-export const HomePageActions = {
+export const TransactionsActions = {
     increment,
     loadTransactions
 };

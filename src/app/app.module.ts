@@ -11,9 +11,11 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { AppMaterialModule } from './app-material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { YearSummaryPageComponent } from './year-summary-page/year-summary-page.component';
-import { homePageReducer, HOME_PAGE_FEATURE } from './home-page/+state/home-page.reducer';
+import { transactionsReducer, HOME_PAGE_FEATURE } from './home-page/+state/transactions.reducer';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { HomePageEffects } from './home-page/+state/home-page.effects';
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent, YearSummaryPageComponent],
@@ -24,12 +26,14 @@ import { HttpClientModule } from '@angular/common/http';
         BrowserAnimationsModule,
         AppMaterialModule,
         StoreModule.forRoot({}),
+        EffectsModule.forRoot(),
         StoreDevtoolsModule.instrument({
             maxAge: 25,
-            name: 'MotoCSGO',
+            name: 'BudgetApp',
             logOnly: environment.production
         }),
-        StoreModule.forFeature(HOME_PAGE_FEATURE, homePageReducer)
+        StoreModule.forFeature(HOME_PAGE_FEATURE, transactionsReducer),
+        EffectsModule.forFeature([HomePageEffects])
     ],
     providers: [],
     bootstrap: [AppComponent],

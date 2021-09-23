@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { HomePageFacade } from './+state/home-page.facade';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TransactionsFacade } from './+state/transactions.facade';
 import { HomePageService } from './+state/home-page.service';
 
 @Component({
@@ -15,16 +15,26 @@ import { HomePageService } from './+state/home-page.service';
 
                 <mat-card class="color-red">
                     <mat-card-title>Wydatki</mat-card-title>
-                    <mat-card-content>-{{ expense }}</mat-card-content>
+                    <mat-card-content>-{{ transactionsFacade.allTransactionAmount$ | async }}</mat-card-content>
                 </mat-card>
                 <mat-card [ngClass]="result > 0 ? 'color-green' : 'color-red'">
                     <mat-card-title>+/-</mat-card-title>
                     <mat-card-content>{{ result }}</mat-card-content>
                 </mat-card>
             </div>
+            <div>
+                <h2>Kategorie</h2>
+
+                <nav mat-tab-nav-bar>
+                    <a mat-tab-link *ngFor="let cat of transactionsFacade.allCategories$ | async">
+                        {{ cat }}
+                    </a>
+                </nav>
+            </div>
         </main>
     `,
-    styleUrls: ['./home-page.component.scss']
+    styleUrls: ['./home-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
     private readonly today = new Date();
@@ -35,10 +45,13 @@ export class HomePageComponent {
     expense = 1000;
     result = this.income - this.expense;
 
-    constructor(private readonly homePageFacade: HomePageFacade, private readonly homePageService: HomePageService) {}
+    constructor(
+        public readonly transactionsFacade: TransactionsFacade,
+        private readonly homePageService: HomePageService
+    ) {}
 
     ngOnInit() {
-        this.homePageFacade.number$.subscribe((number) => {
+        this.transactionsFacade.number$.subscribe((number) => {
             this.income = number;
         });
 
