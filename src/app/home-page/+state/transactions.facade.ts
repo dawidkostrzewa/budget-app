@@ -17,4 +17,8 @@ export class TransactionsFacade {
     allTransactionAmount$: Observable<number> = this.store.select(HomePageSelectors.selectAmountOfTransactions);
 
     allCategories$: Observable<string[]> = this.store.select(HomePageSelectors.selectAllCategories);
+
+    getAllTransactionsByCategory(category: string): Observable<Transaction[]> {
+        return this.store.select(HomePageSelectors.selectTransactionsByCategory(category));
+    }
 }

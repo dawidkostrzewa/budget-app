@@ -13,9 +13,15 @@ const selectAllCategories = createSelector(selectTransactions, (transactions) =>
     ...new Set(transactions.map((transaction) => transaction.category))
 ]);
 
+const selectTransactionsByCategory = (category: string) =>
+    createSelector(selectTransactions, (transactions) =>
+        transactions.filter((transaction) => transaction.category === category)
+    );
+
 export const HomePageSelectors = {
     selectNumber,
     selectTransactions,
     selectAmountOfTransactions,
-    selectAllCategories
+    selectAllCategories,
+    selectTransactionsByCategory
 };

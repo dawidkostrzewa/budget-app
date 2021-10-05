@@ -24,12 +24,13 @@ import { HomePageService } from './+state/home-page.service';
             </div>
             <div>
                 <h2>Kategorie</h2>
-
-                <nav mat-tab-nav-bar>
-                    <a mat-tab-link *ngFor="let cat of transactionsFacade.allCategories$ | async">
-                        {{ cat }}
-                    </a>
-                </nav>
+                <mat-tab-group>
+                    <mat-tab *ngFor="let cat of transactionsFacade.allCategories$ | async" [label]="cat">
+                        <app-category-transactions
+                            [transactions]="this.transactionsFacade.getAllTransactionsByCategory(cat) | async"
+                        ></app-category-transactions>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </main>
     `,

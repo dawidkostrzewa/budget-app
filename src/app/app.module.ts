@@ -16,9 +16,10 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { HomePageEffects } from './home-page/+state/home-page.effects';
+import { CategoryTransactionsComponent } from './home-page/category-transactions/category-transactions.component';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent, YearSummaryPageComponent],
+    declarations: [AppComponent, HeaderComponent, HomePageComponent, SidebarComponent, YearSummaryPageComponent, CategoryTransactionsComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
