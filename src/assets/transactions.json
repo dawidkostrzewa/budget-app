@@ -1,8 +1,11 @@
-[
-    { "id": 1, "amount": 178, "category": "Mieszkanie" },
-    { "id": 2, "amount": 117, "category": "Jedzenie" },
-    { "id": 3, "amount": 94, "category": "Kosmetyki" },
-    { "id": 4, "amount": 151, "category": "Inne" },
-    { "id": 5, "amount": 123, "category": "Kosmetyki" },
-    { "id": 6, "amount": 300, "category": "Transport" }
-]
+{
+    "transactions": [
+        { "id": 1, "amount": 178, "categoryId": 2 },
+        { "id": 2, "amount": 117, "categoryId": 1 },
+        { "id": 3, "amount": 94, "categoryId": 6 },
+        { "id": 4, "amount": 151, "categoryId": 5 },
+        { "id": 5, "amount": 123, "categoryId": 6 },
+        { "id": 6, "amount": 300, "categoryId": 3 },
+        { "id": 7, "amount": 500, "categoryId": 3 }
+    ]
+}

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Transaction } from './home-page.model';
-import { HomePageSelectors } from './transactions.selectors';
+import { CategoriesSelectors } from './categories.selectors';
+import { Category, Transaction } from './home-page.model';
+import { TransactionsSelectors } from './transactions.selectors';
 
 @Injectable({
     providedIn: 'root'
@@ -10,15 +11,18 @@ import { HomePageSelectors } from './transactions.selectors';
 export class TransactionsFacade {
     constructor(private store: Store) {}
 
-    number$: Observable<number> = this.store.select(HomePageSelectors.selectNumber);
+    transactions$: Observable<Transaction[]> = this.store.select(TransactionsSelectors.selectAllTransactions);
+    categories$: Observable<Category[]> = this.store.select(CategoriesSelectors.selectAllCategories);
 
-    transactions$: Observable<Transaction[]> = this.store.select(HomePageSelectors.selectTransactions);
+    // allTransactionAmount$: Observable<number> = this.store.select(HomePageSelectors.selectAmountOfTransactions);
 
-    allTransactionAmount$: Observable<number> = this.store.select(HomePageSelectors.selectAmountOfTransactions);
+    // allCategories$: Observable<Category[]> = this.store.select(HomePageSelectors.selectAllCategories);
 
-    allCategories$: Observable<string[]> = this.store.select(HomePageSelectors.selectAllCategories);
+    // getAllTransactionsByCategory(category: string): Observable<Transaction[]> {
+    //     return this.store.select(HomePageSelectors.selectTransactionsByCategory(category));
+    // }
 
-    getAllTransactionsByCategory(category: string): Observable<Transaction[]> {
-        return this.store.select(HomePageSelectors.selectTransactionsByCategory(category));
+    getCategoryById(id: number) {
+        return this.store.select(CategoriesSelectors.selectCategoryById(id));
     }
 }

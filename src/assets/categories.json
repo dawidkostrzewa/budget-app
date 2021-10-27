@@ -1,0 +1,34 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Jedzenie",
+            "subCategories": ["jedzenie dom", "jedzenie miasto", "alkohol"]
+        },
+        {
+            "id": 2,
+            "name": "Mieszkanie/Dom",
+            "subCategories": ["czynsz", "rachunki", "środki czystości"]
+        },
+        {
+            "id": 3,
+            "name": "Transport",
+            "subCategories": ["paliwo", "mpk"]
+        },
+        {
+            "id": 4,
+            "name": "Telekomunikacja",
+            "subCategories": ["telefon", "internet"]
+        },
+        {
+            "id": 5,
+            "name": "Opieka zdrowotna",
+            "subCategories": ["lekarstwa", "lekarz"]
+        },
+        {
+            "id": 6,
+            "name": "Rozrywka",
+            "subCategories": ["sport", "hobby", "książki"]
+        }
+    ]
+}

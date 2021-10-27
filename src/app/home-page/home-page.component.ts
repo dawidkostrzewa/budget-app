@@ -15,7 +15,7 @@ import { HomePageService } from './+state/home-page.service';
 
                 <mat-card class="color-red">
                     <mat-card-title>Wydatki</mat-card-title>
-                    <mat-card-content>-{{ transactionsFacade.allTransactionAmount$ | async }}</mat-card-content>
+                    <!-- <mat-card-content>-{{ transactionsFacade.allTransactionAmount$ | async }}</mat-card-content> -->
                 </mat-card>
                 <mat-card [ngClass]="result > 0 ? 'color-green' : 'color-red'">
                     <mat-card-title>+/-</mat-card-title>
@@ -25,11 +25,11 @@ import { HomePageService } from './+state/home-page.service';
             <div>
                 <h2>Kategorie</h2>
                 <mat-tab-group>
-                    <mat-tab *ngFor="let cat of transactionsFacade.allCategories$ | async" [label]="cat">
+                    <!-- <mat-tab *ngFor="let cat of transactionsFacade.allCategories$ | async" [label]="cat">
                         <app-category-transactions
                             [transactions]="this.transactionsFacade.getAllTransactionsByCategory(cat) | async"
                         ></app-category-transactions>
-                    </mat-tab>
+                    </mat-tab> -->
                 </mat-tab-group>
             </div>
         </main>
@@ -52,10 +52,6 @@ export class HomePageComponent {
     ) {}
 
     ngOnInit() {
-        this.transactionsFacade.number$.subscribe((number) => {
-            this.income = number;
-        });
-
-        this.homePageService.loadTransactions();
+        this.transactionsFacade.transactions$.subscribe((x) => console.log(x));
     }
 }

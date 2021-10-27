@@ -1,27 +1,14 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { HOME_PAGE_FEATURE, ITransactionsState } from './transactions.reducer';
+import { TRANSTACTIONS_FEATURE, ITransactionsState } from './transactions.reducer';
+import * as fromTransactions from './transactions.reducer';
 
-const selectHomePageState = createFeatureSelector<ITransactionsState>(HOME_PAGE_FEATURE);
-const selectNumber = createSelector(selectHomePageState, (state) => state.number);
-const selectTransactions = createSelector(selectHomePageState, (state) => state.transactions);
-
-const selectAmountOfTransactions = createSelector(selectTransactions, (transactions) =>
-    transactions.reduce((acc, transaction) => acc + transaction.amount, 0)
+const selectTransactionsState = createFeatureSelector<fromTransactions.ITransactionsState>(TRANSTACTIONS_FEATURE);
+const selectTransactionsEntites = createSelector(selectTransactionsState, (state) =>
+    fromTransactions.selectors.selectEntities(state)
 );
 
-const selectAllCategories = createSelector(selectTransactions, (transactions) => [
-    ...new Set(transactions.map((transaction) => transaction.category))
-]);
+const selectAllTransactions = createSelector(selectTransactionsState, fromTransactions.selectors.selectAll);
 
-const selectTransactionsByCategory = (category: string) =>
-    createSelector(selectTransactions, (transactions) =>
-        transactions.filter((transaction) => transaction.category === category)
-    );
-
-export const HomePageSelectors = {
-    selectNumber,
-    selectTransactions,
-    selectAmountOfTransactions,
-    selectAllCategories,
-    selectTransactionsByCategory
+export const TransactionsSelectors = {
+    selectAllTransactions
 };
