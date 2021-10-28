@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TransactionsFacade } from './+state/transactions.facade';
 import { HomePageService } from './+state/home-page.service';
+import { CategoryFacade } from './+state/category.facade';
 
 @Component({
     selector: 'app-home-page',
@@ -25,11 +26,11 @@ import { HomePageService } from './+state/home-page.service';
             <div>
                 <h2>Kategorie</h2>
                 <mat-tab-group>
-                    <!-- <mat-tab *ngFor="let cat of transactionsFacade.allCategories$ | async" [label]="cat">
+                    <mat-tab *ngFor="let cat of categoryFacade.allCategories$ | async" [label]="cat.name">
                         <app-category-transactions
-                            [transactions]="this.transactionsFacade.getAllTransactionsByCategory(cat) | async"
+                            [transactions]="this.transactionsFacade.getAllTransactionsByCategoryId(cat.id) | async"
                         ></app-category-transactions>
-                    </mat-tab> -->
+                    </mat-tab>
                 </mat-tab-group>
             </div>
         </main>
@@ -48,7 +49,8 @@ export class HomePageComponent {
 
     constructor(
         public readonly transactionsFacade: TransactionsFacade,
-        private readonly homePageService: HomePageService
+        public readonly categoryFacade: CategoryFacade,
+        private readonly HomePageService: HomePageService
     ) {}
 
     ngOnInit() {

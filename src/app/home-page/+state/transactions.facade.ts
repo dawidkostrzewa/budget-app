@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { CategoriesSelectors } from './categories.selectors';
-import { Category, Transaction } from './home-page.model';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CategoriesSelectors } from './category.selectors';
+import { Category } from './category.model';
+import { Transaction, TransactionWithCategoryName } from './transaction.model';
 import { TransactionsSelectors } from './transactions.selectors';
 
 @Injectable({
@@ -14,13 +16,23 @@ export class TransactionsFacade {
     transactions$: Observable<Transaction[]> = this.store.select(TransactionsSelectors.selectAllTransactions);
     categories$: Observable<Category[]> = this.store.select(CategoriesSelectors.selectAllCategories);
 
-    // allTransactionAmount$: Observable<number> = this.store.select(HomePageSelectors.selectAmountOfTransactions);
+    transactionsWithCategories$: Observable<TransactionWithCategoryName[]> = combineLatest([
+        this.transactions$,
+        this.categories$
+    ]).pipe(
+        map(([transactions, categories]) =>
+            transactions.map((t: Transaction) => ({
+                id: t.id,
+                amount: t.amount,
+                date: new Date(t.date).getMonth(),
+                categoryName: categories.find((c) => c.id === t.categoryId)?.name || 'Not found'
+            }))
+        )
+    );
 
-    // allCategories$: Observable<Category[]> = this.store.select(HomePageSelectors.selectAllCategories);
-
-    // getAllTransactionsByCategory(category: string): Observable<Transaction[]> {
-    //     return this.store.select(HomePageSelectors.selectTransactionsByCategory(category));
-    // }
+    getAllTransactionsByCategoryId(id: number) {
+        return this.store.select(TransactionsSelectors.selectTransactionByCategory(id));
+    }
 
     getCategoryById(id: number) {
         return this.store.select(CategoriesSelectors.selectCategoryById(id));

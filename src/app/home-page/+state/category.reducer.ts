@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import { Category } from './home-page.model';
+import { Category } from './category.model';
 import { TransactionsActions } from './transactions.actions';
 
 export const CATEGORIES_FEATURE = 'categories';

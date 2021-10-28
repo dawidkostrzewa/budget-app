@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromCategories from './categories.reducer';
+import * as fromCategories from './category.reducer';
 
 const selectCategoriesState = createFeatureSelector<fromCategories.ICategoriesState>(fromCategories.CATEGORIES_FEATURE);
 

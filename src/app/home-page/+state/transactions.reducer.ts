@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Transaction } from './home-page.model';
+import { Transaction } from './transaction.model';
 import { TransactionsActions } from './transactions.actions';
 
 export const TRANSTACTIONS_FEATURE = 'transactions';

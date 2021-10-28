@@ -15,9 +15,8 @@ import { transactionsReducer, TRANSTACTIONS_FEATURE } from './home-page/+state/t
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
-import { HomePageEffects } from './home-page/+state/home-page.effects';
 import { CategoryTransactionsComponent } from './home-page/category-transactions/category-transactions.component';
-import { categoriesReducer, CATEGORIES_FEATURE } from './home-page/+state/categories.reducer';
+import { categoriesReducer, CATEGORIES_FEATURE } from './home-page/+state/category.reducer';
 
 @NgModule({
     declarations: [
@@ -45,7 +44,7 @@ import { categoriesReducer, CATEGORIES_FEATURE } from './home-page/+state/catego
             logOnly: environment.production
         }),
         // StoreModule.forFeature(TRANSTACTIONS_FEATURE, transactionsReducer),
-        EffectsModule.forFeature([HomePageEffects])
+        EffectsModule.forFeature([])
     ],
     providers: [],
     bootstrap: [AppComponent],
