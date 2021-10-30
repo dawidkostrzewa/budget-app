@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TransactionsFacade } from './+state/transactions.facade';
 import { HomePageService } from './+state/home-page.service';
 import { CategoryFacade } from './+state/category.facade';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-home-page',
@@ -11,12 +12,12 @@ import { CategoryFacade } from './+state/category.facade';
             <div class="summary-cards">
                 <mat-card class="color-green">
                     <mat-card-title>Wpływy</mat-card-title>
-                    <mat-card-content>{{ income }}</mat-card-content>
+                    <mat-card-content>{{ expense }}</mat-card-content>
                 </mat-card>
 
                 <mat-card class="color-red">
                     <mat-card-title>Wydatki</mat-card-title>
-                    <!-- <mat-card-content>-{{ transactionsFacade.allTransactionAmount$ | async }}</mat-card-content> -->
+                    <mat-card-content>{{ income$ | async }}</mat-card-content>
                 </mat-card>
                 <mat-card [ngClass]="result > 0 ? 'color-green' : 'color-red'">
                     <mat-card-title>+/-</mat-card-title>
@@ -43,9 +44,9 @@ export class HomePageComponent {
     currentMonth = this.today.toLocaleString('default', { month: 'long' });
     currentYear = this.today.getFullYear();
 
-    income = 2000;
+    income$: Observable<number> | undefined;
     expense = 1000;
-    result = this.income - this.expense;
+    result = 0;
 
     constructor(
         public readonly transactionsFacade: TransactionsFacade,
@@ -54,6 +55,6 @@ export class HomePageComponent {
     ) {}
 
     ngOnInit() {
-        this.transactionsFacade.transactions$.subscribe((x) => console.log(x));
+        this.income$ = this.transactionsFacade.expensesAmount$;
     }
 }

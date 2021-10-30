@@ -30,6 +30,8 @@ export class TransactionsFacade {
         )
     );
 
+    expensesAmount$ = this.store.select(TransactionsSelectors.selectExpensesAmount);
+
     getAllTransactionsByCategoryId(id: number) {
         return this.store.select(TransactionsSelectors.selectTransactionByCategory(id));
     }

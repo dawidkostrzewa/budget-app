@@ -10,6 +10,12 @@ const selectTransactionsEntites = createSelector(selectTransactionsState, (state
 
 const selectAllTransactions = createSelector(selectTransactionsState, fromTransactions.selectors.selectAll);
 
+const selectExpensesAmount = createSelector(selectAllTransactions, (transactions) =>
+    transactions.reduce((acc, transaction) => {
+        return transaction.amount + acc;
+    }, 0)
+);
+
 const selectTransactionByCategory = (catId: number) =>
     createSelector(selectAllTransactions, (transaction) =>
         transaction.filter((transaction: Transaction) => transaction.categoryId === catId)
@@ -17,5 +23,6 @@ const selectTransactionByCategory = (catId: number) =>
 
 export const TransactionsSelectors = {
     selectAllTransactions,
+    selectExpensesAmount,
     selectTransactionByCategory
 };
