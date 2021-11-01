@@ -27,9 +27,11 @@ import { Observable } from 'rxjs';
             <div>
                 <h2>Kategorie</h2>
                 <mat-tab-group>
-                    <mat-tab *ngFor="let cat of categoryFacade.allCategories$ | async" [label]="cat.name">
+                    <mat-tab *ngFor="let cat of categoryFacade.allMainCategories$ | async" [label]="cat.name">
                         <app-category-transactions
-                            [transactions]="this.transactionsFacade.getAllTransactionsByCategoryId(cat.id) | async"
+                            [transactions]="
+                                this.transactionsFacade.getAllTransactionsByMainCategoryName(cat.name) | async
+                            "
                         ></app-category-transactions>
                     </mat-tab>
                 </mat-tab-group>

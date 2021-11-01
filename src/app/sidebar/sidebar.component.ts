@@ -11,7 +11,8 @@ import { TransactionsFacade } from '../home-page/+state/transactions.facade';
                 *ngFor="let transaction of (transactionFacade.transactionsWithCategories$ | async)?.slice(0, 3)"
             >
                 <mat-list-item
-                    >{{ transaction.amount }} PLN - {{ transaction.categoryName }} {{ transaction.date }}</mat-list-item
+                    >{{ transaction.amount }} PLN - {{ transaction.mainCategoryName }}
+                    {{ transaction.date }}</mat-list-item
                 >
                 <mat-divider></mat-divider>
             </ng-container>

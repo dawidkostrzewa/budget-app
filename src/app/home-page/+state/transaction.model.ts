@@ -8,4 +8,5 @@ export interface Transaction {
 export interface TransactionWithCategoryName extends Omit<Transaction, 'categoryId' | 'date'> {
     categoryName: string;
     date: number;
+    mainCategoryName: string;
 }

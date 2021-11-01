@@ -1,6 +1,10 @@
 export interface Category {
     id: number;
     name: string;
-    //TODO: subCategories typ
-    subCategories: string[];
+    mainCategoryId: number;
+}
+
+export interface MainCategory {
+    id: number;
+    name: string;
 }

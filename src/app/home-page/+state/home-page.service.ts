@@ -7,7 +7,7 @@ import { ITransactionsState } from './transactions.reducer';
 import { TransactionsFacade } from './transactions.facade';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
-import { Category } from './category.model';
+import { Category, MainCategory } from './category.model';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +28,15 @@ export class HomePageService {
 
     loadCategories() {
         this.http
-            .get<{ categories: Category[] }>('assets/categories.json')
-            .subscribe(({ categories }) => this.store.dispatch(TransactionsActions.loadCategories({ categories })));
+            .get<{ subCategories: Category[] }>('assets/categories.json')
+            .subscribe(({ subCategories }) =>
+                this.store.dispatch(TransactionsActions.loadCategories({ subCategories }))
+            );
+
+        this.http
+            .get<{ mainCategories: MainCategory[] }>('assets/main-categories.json')
+            .subscribe(({ mainCategories }) =>
+                this.store.dispatch(TransactionsActions.loadMainCategories({ mainCategories }))
+            );
     }
 }

@@ -1,11 +1,16 @@
 import { createAction, props } from '@ngrx/store';
-import { Category } from './category.model';
+import { Category, MainCategory } from './category.model';
 import { Transaction } from './transaction.model';
 
 const loadTransactions = createAction('[Transactions] Load transactions', props<{ transactions: Transaction[] }>());
-const loadCategories = createAction('[Categories] Load Categories', props<{ categories: Category[] }>());
+const loadCategories = createAction('[Categories] Load Categories', props<{ subCategories: Category[] }>());
+const loadMainCategories = createAction(
+    '[Categories] Load Main Categories',
+    props<{ mainCategories: MainCategory[] }>()
+);
 
 export const TransactionsActions = {
     loadTransactions,
-    loadCategories
+    loadCategories,
+    loadMainCategories
 };

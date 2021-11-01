@@ -9,7 +9,10 @@ const selectCategoryById = (id: number) => createSelector(selectCategoriesEnitie
 
 const selectAllCategories = createSelector(selectCategoriesState, fromCategories.selectors.selectAll);
 
+const selectAllMainCategories = createSelector(selectCategoriesState, (state) => state.mainCategories);
+
 export const CategoriesSelectors = {
     selectCategoryById,
-    selectAllCategories
+    selectAllCategories,
+    selectAllMainCategories
 };

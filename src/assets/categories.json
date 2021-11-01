@@ -1,34 +1,69 @@
 {
-    "categories": [
+    "subCategories": [
         {
             "id": 1,
-            "name": "Jedzenie",
-            "subCategories": ["jedzenie dom", "jedzenie miasto", "alkohol"]
+            "name": "jedzenie dom",
+            "mainCategoryId": 1
         },
         {
             "id": 2,
-            "name": "Mieszkanie/Dom",
-            "subCategories": ["czynsz", "rachunki", "środki czystości"]
+            "name": "jedzenie miasto",
+            "mainCategoryId": 1
         },
         {
             "id": 3,
-            "name": "Transport",
-            "subCategories": ["paliwo", "mpk"]
+            "name": "alkohol",
+            "mainCategoryId": 1
         },
         {
             "id": 4,
-            "name": "Telekomunikacja",
-            "subCategories": ["telefon", "internet"]
+            "name": "czynsz",
+            "mainCategoryId": 2
         },
         {
             "id": 5,
-            "name": "Opieka zdrowotna",
-            "subCategories": ["lekarstwa", "lekarz"]
+            "name": "rachunki",
+            "mainCategoryId": 2
         },
         {
             "id": 6,
-            "name": "Rozrywka",
-            "subCategories": ["sport", "hobby", "książki"]
+            "name": "środki czystości",
+            "mainCategoryId": 2
+        },
+        {
+            "id": 7,
+            "name": "paliwo",
+            "mainCategoryId": 3
+        },
+        {
+            "id": 8,
+            "name": "mpk",
+            "mainCategoryId": 3
+        },
+        {
+            "id": 9,
+            "name": "telefon",
+            "mainCategoryId": 4
+        },
+        {
+            "id": 10,
+            "name": "internet",
+            "mainCategoryId": 4
+        },
+        {
+            "id": 11,
+            "name": "sport",
+            "mainCategoryId": 5
+        },
+        {
+            "id": 12,
+            "name": "hobby",
+            "mainCategoryId": 5
+        },
+        {
+            "id": 13,
+            "name": "książki",
+            "mainCategoryId": 5
         }
     ]
 }

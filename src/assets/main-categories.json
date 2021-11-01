@@ -1,0 +1,24 @@
+{
+    "mainCategories": [
+        {
+            "id": 1,
+            "name": "Jedzenie"
+        },
+        {
+            "id": 2,
+            "name": "Mieszkanie/Dom"
+        },
+        {
+            "id": 3,
+            "name": "Transport"
+        },
+        {
+            "id": 4,
+            "name": "Telekomunikacja"
+        },
+        {
+            "id": 5,
+            "name": "Rozrywka"
+        }
+    ]
+}
