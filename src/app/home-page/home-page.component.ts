@@ -35,7 +35,8 @@ import { map } from 'rxjs/operators';
                                 this.transactionsFacade.getAllTransactionsByMainCategoryName(cat.name) | async
                             "
                             [summary]="
-                                this.transactionsFacade.getTransactionsAmountSummaryByMainCategory(cat.id) | async
+                                (this.transactionsFacade.getTransactionsAmountSummaryByMainCategory(cat.id) | async) ||
+                                []
                             "
                         ></app-category-transactions>
                     </mat-tab>
