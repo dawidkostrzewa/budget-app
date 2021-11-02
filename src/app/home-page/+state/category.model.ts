@@ -8,3 +8,8 @@ export interface MainCategory {
     id: number;
     name: string;
 }
+
+export interface CategoryAmountSummary {
+    category: Category | undefined;
+    amount: number;
+}

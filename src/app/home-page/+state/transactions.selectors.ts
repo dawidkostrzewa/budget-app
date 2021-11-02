@@ -21,8 +21,16 @@ const selectTransactionByCategory = (catId: number) =>
         transaction.filter((transaction: Transaction) => transaction.categoryId === catId)
     );
 
+const selectTransactionsAmountByCategory = (catId: number) =>
+    createSelector(selectTransactionByCategory(catId), (transactions) =>
+        transactions.reduce((acc, transaction) => {
+            return transaction.amount + acc;
+        }, 0)
+    );
+
 export const TransactionsSelectors = {
     selectAllTransactions,
     selectExpensesAmount,
-    selectTransactionByCategory
+    selectTransactionByCategory,
+    selectTransactionsAmountByCategory
 };

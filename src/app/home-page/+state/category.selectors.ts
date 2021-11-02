@@ -11,8 +11,14 @@ const selectAllCategories = createSelector(selectCategoriesState, fromCategories
 
 const selectAllMainCategories = createSelector(selectCategoriesState, (state) => state.mainCategories);
 
+const selectSubCategoriesByMainCategoryId = (mainCategoryId: number) =>
+    createSelector(selectAllCategories, (categories) =>
+        categories.filter((category) => category.mainCategoryId === mainCategoryId)
+    );
+
 export const CategoriesSelectors = {
     selectCategoryById,
     selectAllCategories,
-    selectAllMainCategories
+    selectAllMainCategories,
+    selectSubCategoriesByMainCategoryId
 };

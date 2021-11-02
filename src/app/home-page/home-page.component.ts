@@ -3,6 +3,8 @@ import { TransactionsFacade } from './+state/transactions.facade';
 import { HomePageService } from './+state/home-page.service';
 import { CategoryFacade } from './+state/category.facade';
 import { Observable } from 'rxjs';
+import { CategoryAmountSummary } from './+state/category.model';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-home-page',
@@ -31,6 +33,9 @@ import { Observable } from 'rxjs';
                         <app-category-transactions
                             [transactions]="
                                 this.transactionsFacade.getAllTransactionsByMainCategoryName(cat.name) | async
+                            "
+                            [summary]="
+                                this.transactionsFacade.getTransactionsAmountSummaryByMainCategory(cat.id) | async
                             "
                         ></app-category-transactions>
                     </mat-tab>

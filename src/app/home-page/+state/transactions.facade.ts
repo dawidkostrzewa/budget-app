@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, Observable } from 'rxjs';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, merge, Observable } from 'rxjs';
+import { combineAll, map, mergeAll, switchMap, withLatestFrom } from 'rxjs/operators';
 import { CategoriesSelectors } from './category.selectors';
-import { Category, MainCategory } from './category.model';
+import { Category, CategoryAmountSummary, MainCategory } from './category.model';
 import { Transaction, TransactionWithCategoryName } from './transaction.model';
 import { TransactionsSelectors } from './transactions.selectors';
 
@@ -49,7 +49,25 @@ export class TransactionsFacade {
         );
     }
 
+    getCategoriesByMainCategory(mainCategoryId: number) {
+        return this.store.select(CategoriesSelectors.selectSubCategoriesByMainCategoryId(mainCategoryId));
+    }
+
+    getTransactionsAmountByCategory(catId: number) {
+        return this.store
+            .select(TransactionsSelectors.selectTransactionsAmountByCategory(catId))
+            .pipe(switchMap((amount) => this.getCategoryById(catId).pipe(map((category) => ({ amount, category })))));
+    }
+
     getCategoryById(id: number) {
         return this.store.select(CategoriesSelectors.selectCategoryById(id));
+    }
+
+    getTransactionsAmountSummaryByMainCategory(mainCategoryId: number): Observable<CategoryAmountSummary[]> {
+        return this.getCategoriesByMainCategory(mainCategoryId).pipe(
+            switchMap((categories) =>
+                combineLatest(categories.map((cat) => this.getTransactionsAmountByCategory(cat.id)))
+            )
+        );
     }
 }
