@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { TransactionsFacade } from '../home-page/+state/transactions.facade';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TransactionsService } from '../home-page/+state/transactions.service';
 
 @Component({
@@ -22,8 +20,6 @@ import { TransactionsService } from '../home-page/+state/transactions.service';
     styleUrls: ['./sidebar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
     constructor(public readonly transactionService: TransactionsService) {}
-
-    ngOnInit(): void {}
 }

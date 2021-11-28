@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TransactionsFacade } from './+state/transactions.facade';
 import { HomePageService } from './+state/home-page.service';
 import { CategoryFacade } from './+state/category.facade';
 import { Observable } from 'rxjs';
-import { CategoryAmountSummary } from './+state/category.model';
-import { map } from 'rxjs/operators';
 import { TransactionsService } from './+state/transactions.service';
 
 @Component({
@@ -48,7 +46,7 @@ import { TransactionsService } from './+state/transactions.service';
     styleUrls: ['./home-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
     private readonly today = new Date();
     currentMonth = this.today.toLocaleString('default', { month: 'long' });
     currentYear = this.today.getFullYear();

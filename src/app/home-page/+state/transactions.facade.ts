@@ -16,7 +16,7 @@ export class TransactionsFacade {
     transactions$: Observable<Transaction[]> = this.store.select(TransactionsSelectors.selectAllTransactions);
     categories$: Observable<Category[]> = this.store.select(CategoriesSelectors.selectAllCategories);
     mainCategories$: Observable<MainCategory[]> = this.store.select(CategoriesSelectors.selectAllMainCategories);
-    expensesAmount$ = this.store.select(TransactionsSelectors.selectExpensesAmount);
+    expensesAmount$: Observable<number> = this.store.select(TransactionsSelectors.selectExpensesAmount);
 
     getAllTransactionsByCategoryId(id: number) {
         return this.store.select(TransactionsSelectors.selectTransactionByCategory(id));
