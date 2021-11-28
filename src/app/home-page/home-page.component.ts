@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TransactionsFacade } from './+state/transactions.facade';
-import { HomePageService } from './+state/home-page.service';
+import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/category.facade';
 import { Observable } from 'rxjs';
 import { TransactionsService } from './+state/transactions.service';
@@ -59,7 +59,7 @@ export class HomePageComponent implements OnInit {
         public readonly transactionsFacade: TransactionsFacade,
         public readonly categoryFacade: CategoryFacade,
         public readonly transactionService: TransactionsService,
-        public readonly homePageService: HomePageService
+        public readonly apiService: ApiService
     ) {}
 
     ngOnInit() {

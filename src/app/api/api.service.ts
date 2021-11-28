@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TransactionsActions } from './transactions.actions';
-import { Transaction, TransactionWithCategoryName } from './transaction.model';
-import { ITransactionsState } from './transactions.reducer';
-import { TransactionsFacade } from './transactions.facade';
-import { map, switchMap } from 'rxjs/operators';
-import { combineLatest, Observable } from 'rxjs';
-import { Category, MainCategory } from './category.model';
+import { TransactionsActions } from '../home-page/+state/transactions.actions';
+import { Transaction } from '../home-page/+state/transaction.model';
+import { Category, MainCategory } from '../home-page/+state/category.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class HomePageService {
+export class ApiService {
     constructor(private readonly http: HttpClient, private readonly store: Store) {
         this.loadCategories();
         this.loadTransactions();
