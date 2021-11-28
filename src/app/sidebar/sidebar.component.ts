@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TransactionsFacade } from '../home-page/+state/transactions.facade';
+import { TransactionsService } from '../home-page/+state/transactions.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -8,7 +9,7 @@ import { TransactionsFacade } from '../home-page/+state/transactions.facade';
         <h2 class="sidebar-title">Ostatnie 3 transakcje</h2>
         <mat-list>
             <ng-container
-                *ngFor="let transaction of (transactionFacade.transactionsWithCategories$ | async)?.slice(0, 3)"
+                *ngFor="let transaction of (transactionService.getTransactionsWithCategories() | async)?.slice(0, 3)"
             >
                 <mat-list-item
                     >{{ transaction.amount }} PLN - {{ transaction.mainCategoryName }}
@@ -22,7 +23,7 @@ import { TransactionsFacade } from '../home-page/+state/transactions.facade';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
-    constructor(private store: Store, public readonly transactionFacade: TransactionsFacade) {}
+    constructor(public readonly transactionService: TransactionsService) {}
 
     ngOnInit(): void {}
 }

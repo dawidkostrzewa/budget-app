@@ -5,6 +5,7 @@ import { CategoryFacade } from './+state/category.facade';
 import { Observable } from 'rxjs';
 import { CategoryAmountSummary } from './+state/category.model';
 import { map } from 'rxjs/operators';
+import { TransactionsService } from './+state/transactions.service';
 
 @Component({
     selector: 'app-home-page',
@@ -32,10 +33,10 @@ import { map } from 'rxjs/operators';
                     <mat-tab *ngFor="let cat of categoryFacade.allMainCategories$ | async" [label]="cat.name">
                         <app-category-transactions
                             [transactions]="
-                                this.transactionsFacade.getAllTransactionsByMainCategoryName(cat.name) | async
+                                this.transactionService.getAllTransactionsByMainCategoryName(cat.name) | async
                             "
                             [summary]="
-                                (this.transactionsFacade.getTransactionsAmountSummaryByMainCategory(cat.id) | async) ||
+                                (this.transactionService.getTransactionsAmountSummaryByMainCategory(cat.id) | async) ||
                                 []
                             "
                         ></app-category-transactions>
@@ -59,7 +60,8 @@ export class HomePageComponent {
     constructor(
         public readonly transactionsFacade: TransactionsFacade,
         public readonly categoryFacade: CategoryFacade,
-        private readonly HomePageService: HomePageService
+        public readonly transactionService: TransactionsService,
+        public readonly homePageService: HomePageService
     ) {}
 
     ngOnInit() {
