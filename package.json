@@ -1,13 +1,31 @@
 {
-  "name": "budget-app-front",
+  "name": "budget-app",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
+    "ng": "nx",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "nx workspace-lint && ng lint",
+    "nx": "nx",
+    "affected:apps": "nx affected:apps",
+    "affected:libs": "nx affected:libs",
+    "affected:build": "nx affected:build",
+    "affected:e2e": "nx affected:e2e",
+    "affected:test": "nx affected:test",
+    "affected:lint": "nx affected:lint",
+    "affected:dep-graph": "nx affected:dep-graph",
+    "affected": "nx affected",
+    "format": "nx format:write",
+    "format:write": "nx format:write",
+    "format:check": "nx format:check",
+    "update": "ng update @nrwl/workspace",
+    "update:check": "ng update",
+    "dep-graph": "nx dep-graph",
+    "workspace-schematic": "nx workspace-schematic",
+    "help": "nx help",
+    "postinstall": "node ./decorate-angular-cli.js"
   },
   "private": true,
   "dependencies": {
@@ -25,9 +43,12 @@
     "@ngrx/entity": "^12.4.0",
     "@ngrx/store": "12.4.0",
     "@ngrx/store-devtools": "^12.4.0",
+    "@nrwl/cli": "^13.3.8",
+    "@nrwl/workspace": "^13.3.8",
     "rxjs": "6.6.0",
     "tslib": "2.2.0",
-    "zone.js": "0.11.4"
+    "zone.js": "0.11.4",
+    "@nrwl/angular": "13.3.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.1.2",
@@ -49,6 +70,8 @@
     "karma-coverage": "2.0.3",
     "karma-jasmine": "4.0.0",
     "karma-jasmine-html-reporter": "1.7.0",
-    "typescript": "4.5.4"
+    "typescript": "4.5.4",
+    "@nrwl/workspace": "13.3.8",
+    "prettier": "^2.3.1"
   }
 }
