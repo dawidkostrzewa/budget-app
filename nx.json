@@ -9,7 +9,7 @@
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*",
-    "tsconfig.base.json": "*"
+    "tsconfig.json": "*"
   },
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
