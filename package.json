@@ -1,5 +1,5 @@
 {
-  "name": "budget-app-front",
+  "name": "budget-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "nx",
