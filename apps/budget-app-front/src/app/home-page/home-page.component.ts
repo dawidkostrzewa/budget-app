@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { combineLatest, Observable, of } from 'rxjs';
 import { TransactionsFacade } from './+state/transactions.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/category.facade';
-import { Observable } from 'rxjs';
 import { TransactionsService } from './+state/transactions.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -13,20 +14,22 @@ import { TransactionsService } from './+state/transactions.service';
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
-          <mat-card-content>{{ expense }}</mat-card-content>
+          <mat-card-content>{{ income }}</mat-card-content>
         </mat-card>
 
         <mat-card class="color-red">
           <mat-card-title>Wydatki</mat-card-title>
-          <mat-card-content>{{ income$ | async }}</mat-card-content>
+          <mat-card-content>{{ expensesAmount$ | async }}</mat-card-content>
         </mat-card>
-        <mat-card [ngClass]="result > 0 ? 'color-green' : 'color-red'">
+        <mat-card
+          [ngClass]="(result$ | async)! > 0 ? 'color-green' : 'color-red'"
+        >
           <mat-card-title>+/-</mat-card-title>
-          <mat-card-content>{{ result }}</mat-card-content>
+          <mat-card-content>{{ result$ | async }}</mat-card-content>
         </mat-card>
       </div>
       <div>
-        <h2>Kategorie</h2>
+        <h2>Kategorie wydatków:</h2>
         <mat-tab-group>
           <mat-tab
             *ngFor="let cat of categoryFacade.allMainCategories$ | async"
@@ -57,9 +60,9 @@ export class HomePageComponent implements OnInit {
   currentMonth = this.today.toLocaleString('default', { month: 'long' });
   currentYear = this.today.getFullYear();
 
-  income$: Observable<number> | undefined;
-  expense = 1000;
-  result = 0;
+  expensesAmount$: Observable<number> | undefined;
+  income = 1200;
+  result$: Observable<number> = of(0);
 
   constructor(
     public readonly transactionsFacade: TransactionsFacade,
@@ -69,6 +72,10 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.income$ = this.transactionsFacade.expensesAmount$;
+    this.expensesAmount$ = this.transactionsFacade.expensesAmount$;
+
+    this.result$ = combineLatest([this.expensesAmount$]).pipe(
+      map(([expenses]) => this.income - expenses)
+    );
   }
 }
