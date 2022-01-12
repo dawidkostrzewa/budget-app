@@ -24,12 +24,14 @@ import { map } from 'rxjs/operators';
         <mat-card
           [ngClass]="(result$ | async)! > 0 ? 'color-green' : 'color-red'"
         >
-          <mat-card-title>+/-</mat-card-title>
+          <mat-card-title>Do wydania pozostało:</mat-card-title>
           <mat-card-content>{{ result$ | async }}</mat-card-content>
         </mat-card>
       </div>
+      <mat-divider></mat-divider>
       <div>
-        <h2>Kategorie wydatków:</h2>
+        <h2>Wydatki</h2>
+        <div>Suma: {{ expensesAmount$ | async }}</div>
         <mat-tab-group>
           <mat-tab
             *ngFor="let cat of categoryFacade.allMainCategories$ | async"
@@ -49,6 +51,11 @@ import { map } from 'rxjs/operators';
             ></app-category-transactions>
           </mat-tab>
         </mat-tab-group>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h2>Wpływy</h2>
+        <div>Suma: {{ income }}</div>
       </div>
     </main>
   `,

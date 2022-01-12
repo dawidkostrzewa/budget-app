@@ -1,15 +1,19 @@
 .summary-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 30px;
 
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .color-red {
-    color: red;
+  color: red;
 }
 
 .color-green {
-    color: green;
+  color: green;
+}
+
+mat-divider {
+  margin: 50px 0;
 }
