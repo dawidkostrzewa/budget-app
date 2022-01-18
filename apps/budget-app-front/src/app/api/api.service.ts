@@ -6,33 +6,44 @@ import { Transaction } from '../home-page/+state/transaction.model';
 import { Category, MainCategory } from '../home-page/+state/category.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-    constructor(private readonly http: HttpClient, private readonly store: Store) {
-        this.loadCategories();
-        this.loadTransactions();
-    }
+  constructor(
+    private readonly http: HttpClient,
+    private readonly store: Store
+  ) {
+    this.loadCategories();
+    this.loadTransactions();
+  }
 
-    loadTransactions() {
-        this.http
-            .get<{ transactions: Transaction[] }>('assets/transactions.json')
-            .subscribe(({ transactions }) =>
-                this.store.dispatch(TransactionsActions.loadTransactions({ transactions }))
-            );
-    }
+  API_URL = 'http://localhost:3333/api';
 
-    loadCategories() {
-        this.http
-            .get<{ subCategories: Category[] }>('assets/categories.json')
-            .subscribe(({ subCategories }) =>
-                this.store.dispatch(TransactionsActions.loadCategories({ subCategories }))
-            );
+  loadTransactions() {
+    this.http
+      .get<{ transactions: Transaction[] }>(`${this.API_URL}/transactions`)
+      .subscribe(({ transactions }) =>
+        this.store.dispatch(
+          TransactionsActions.loadTransactions({ transactions })
+        )
+      );
+  }
 
-        this.http
-            .get<{ mainCategories: MainCategory[] }>('assets/main-categories.json')
-            .subscribe(({ mainCategories }) =>
-                this.store.dispatch(TransactionsActions.loadMainCategories({ mainCategories }))
-            );
-    }
+  loadCategories() {
+    this.http
+      .get<{ subCategories: Category[] }>(`${this.API_URL}/sub-categories`)
+      .subscribe(({ subCategories }) =>
+        this.store.dispatch(
+          TransactionsActions.loadCategories({ subCategories })
+        )
+      );
+
+    this.http
+      .get<{ mainCategories: MainCategory[] }>(`${this.API_URL}/categories`)
+      .subscribe(({ mainCategories }) =>
+        this.store.dispatch(
+          TransactionsActions.loadMainCategories({ mainCategories })
+        )
+      );
+  }
 }

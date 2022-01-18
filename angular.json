@@ -3,6 +3,58 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "budget-app-backend": {
+      "root": "apps/budget-app-backend",
+      "sourceRoot": "apps/budget-app-backend/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/budget-app-backend",
+            "main": "apps/budget-app-backend/src/main.ts",
+            "tsConfig": "apps/budget-app-backend/tsconfig.app.json",
+            "assets": ["apps/budget-app-backend/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/budget-app-backend/src/environments/environment.ts",
+                  "with": "apps/budget-app-backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "budget-app-backend:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/budget-app-backend/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/budget-app-backend"],
+          "options": {
+            "jestConfig": "apps/budget-app-backend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "budget-app-front": {
       "projectType": "application",
       "schematics": {
@@ -109,10 +161,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ],
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
             "tsConfig": [
               "apps/budget-app-front/tsconfig.app.json",
               "apps/budget-app-front/tsconfig.spec.json"
