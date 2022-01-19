@@ -15,3 +15,9 @@ export enum SheetName {
   NOVEMBER = 'Listopad',
   DECEMBER = 'Grudzień',
 }
+
+export enum ValueRenderOption {
+  UNFORMATTED_VALUE = 'UNFORMATTED_VALUE',
+  FORMATTED_VALUE = 'FORMATTED_VALUE',
+  FORMULA = 'FORMULA',
+}
