@@ -3,7 +3,11 @@ import {
   GoogleSpreadsheet,
   GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet';
-import { SheetName, ValueRenderOption } from '../../models/Sheets.model';
+import {
+  CategoriesRages,
+  SheetName,
+  ValueRenderOption,
+} from '../../models/Sheets.model';
 
 import { google } from 'googleapis';
 const keys = require('/google-auth.json');
@@ -38,11 +42,16 @@ export class SheetsApiService {
       range: sheetName,
       valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
     });
-    const filtered =
-      data?.values?.filter(
-        (x) => x.length && x[0] != '.' && x[0] != ' ' && !!x[0]
-      ) || [];
-    return filtered;
+
+    const batchGet = await sheets.spreadsheets.values.batchGet({
+      spreadsheetId: this.spredsheetId,
+      ranges: [CategoriesRages.INCOME, CategoriesRages.EXPENSES],
+      valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
+    });
+    return {
+      incomeCategories: batchGet.data.valueRanges![0]?.values,
+      expenseCategories: batchGet.data.valueRanges![1]?.values,
+    };
   }
 
   async getTotalIncomeExpenses(): Promise<{

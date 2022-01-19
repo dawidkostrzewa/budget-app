@@ -21,3 +21,8 @@ export enum ValueRenderOption {
   FORMATTED_VALUE = 'FORMATTED_VALUE',
   FORMULA = 'FORMULA',
 }
+
+export const CategoriesRages = {
+  INCOME: `${SheetName.CATEGORIES}!B14:C29`,
+  EXPENSES: `${SheetName.CATEGORIES}!B35:C213`,
+};
