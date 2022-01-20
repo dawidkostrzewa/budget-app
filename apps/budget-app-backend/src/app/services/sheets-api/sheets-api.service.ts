@@ -32,15 +32,9 @@ export class SheetsApiService {
   }
 
   async getCategories() {
-    const sheetName = `${SheetName.CATEGORIES}!B14:C213`;
     const sheets = google.sheets({
       version: 'v4',
       auth: this.googleAuthClient,
-    });
-    const { data } = await sheets.spreadsheets.values.get({
-      spreadsheetId: this.spredsheetId,
-      range: sheetName,
-      valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
     });
 
     const batchGet = await sheets.spreadsheets.values.batchGet({
@@ -48,10 +42,41 @@ export class SheetsApiService {
       ranges: [CategoriesRages.INCOME, CategoriesRages.EXPENSES],
       valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
     });
+
+    const incomeCategories = this.convertResponseToCategoriesWithSubCategories(
+      batchGet.data.valueRanges![0]?.values!,
+      16
+    );
+
+    const expenseCategories = this.convertResponseToCategoriesWithSubCategories(
+      batchGet.data.valueRanges![1]?.values!,
+      12
+    );
+
     return {
-      incomeCategories: batchGet.data.valueRanges![0]?.values,
-      expenseCategories: batchGet.data.valueRanges![1]?.values,
+      incomeCategories,
+      expenseCategories,
     };
+  }
+
+  private convertResponseToCategoriesWithSubCategories(
+    expenseCategories: string[][],
+    itemsInCategory: number
+  ) {
+    const allCategories = expenseCategories.map((x) => x[0]);
+    let mainCategoriesWithSubCategories = [];
+    for (let i = 0; i < allCategories.length; i += itemsInCategory) {
+      const all = allCategories.slice(i, i + itemsInCategory);
+      const mainCategory = all[0];
+      const subCategories = all
+        .slice(1)
+        .filter((x) => !!x && x !== '-' && x !== ' ' && x !== '.');
+      mainCategoriesWithSubCategories.push({
+        mainCategory,
+        subCategories,
+      });
+    }
+    return mainCategoriesWithSubCategories;
   }
 
   async getTotalIncomeExpenses(): Promise<{
