@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 import {
   AllCategoriesRages,
+  MonthExpensesRages,
   SheetName,
+  SheetNameMap,
   ValueRenderOption,
 } from '../../models/Sheets.model';
 
@@ -59,7 +61,7 @@ export class SheetsApiService {
     totalIncome: number;
     totalExpenses: number;
   }> {
-    const sheetName = `${SheetName.JANUARY}!A1:E20`;
+    const sheetName = `${SheetNameMap.get(SheetName.JANUARY)}!A1:E20`;
 
     const {
       data: { values },
@@ -76,6 +78,62 @@ export class SheetsApiService {
       totalIncome,
       totalExpenses,
     };
+  }
+
+  async getMonthExpenses(params: { month: SheetName }) {
+    const currentMonth = new Intl.DateTimeFormat('en-US', {
+      month: 'long',
+    }).format(new Date());
+    const month = params.month
+      ? (params.month.toUpperCase() as SheetName)
+      : (currentMonth.toUpperCase() as SheetName);
+    const {
+      data: { valueRanges },
+    } = await this.sheets.spreadsheets.values.batchGet({
+      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      //TODO: get current month
+      ranges: [
+        `${SheetNameMap.get(month)}${MonthExpensesRages.EXPENSES}`,
+        `${SheetNameMap.get(month)}!C77:D78`,
+      ],
+      valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
+    });
+
+    return {
+      month: SheetNameMap.get(month),
+      totalPlanned: valueRanges![1].values![0]![0],
+      totalReal: valueRanges![1].values![0]![1],
+      expenses: this.converResponseToCategoriesWithValues(
+        valueRanges![0].values!
+      ),
+    };
+  }
+
+  private converResponseToCategoriesWithValues(
+    categories: any[][],
+    itemsInCategory: number = 12
+  ) {
+    const allCategories = categories.map((x) => ({
+      name: x[0],
+      planned: x[1],
+      real: x[2],
+    }));
+
+    let mainCategoriesWithSubCategories = [];
+    for (let i = 0; i < allCategories.length; i += itemsInCategory) {
+      const all = allCategories.slice(i, i + itemsInCategory);
+      const mainCategory = all[0];
+      const subCategories = all
+        .slice(1)
+        .filter(
+          ({ name }) => !!name && name !== '-' && name !== ' ' && name !== '.'
+        );
+      mainCategoriesWithSubCategories.push({
+        mainCategory,
+        subCategories,
+      });
+    }
+    return mainCategoriesWithSubCategories;
   }
 
   private convertResponseToCategoriesWithSubCategories(

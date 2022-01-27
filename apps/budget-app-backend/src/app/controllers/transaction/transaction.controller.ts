@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
+import { SheetName } from '../../models/Sheets.model';
 import { SheetsApiService } from '../../services/sheets-api/sheets-api.service';
 
 @Controller('transaction')
@@ -11,5 +12,10 @@ export class TransactionController {
     totalExpenses: number;
   }> {
     return this.sheetService.getTotalIncomeExpenses();
+  }
+
+  @Get('expenses')
+  getCurrentMonthExpenses(@Query() param: { month: SheetName }) {
+    return this.sheetService.getMonthExpenses(param);
   }
 }
