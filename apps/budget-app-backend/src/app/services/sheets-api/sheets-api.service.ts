@@ -1,24 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { google } from 'googleapis';
 import {
-  GoogleSpreadsheet,
-  GoogleSpreadsheetWorksheet,
-} from 'google-spreadsheet';
-import {
-  CategoriesRages,
+  AllCategoriesRages,
   SheetName,
   ValueRenderOption,
 } from '../../models/Sheets.model';
 
-import { google } from 'googleapis';
+import { Category } from '../../models/Categories.model';
 const keys = require('/google-auth.json');
 
 @Injectable()
 export class SheetsApiService {
-  private spredsheet: GoogleSpreadsheet = new GoogleSpreadsheet(
-    '16P8_VsGbzriBsNVSHzH8lQno89F1c2F1fQwk1kZvbVM'
-  );
-
-  private spredsheetId = '16P8_VsGbzriBsNVSHzH8lQno89F1c2F1fQwk1kZvbVM';
+  private static SPREED_SHEET_ID = process.env.SPREAD_SHEET;
 
   private googleAuthClient = new google.auth.JWT(
     keys.client_email,
@@ -27,19 +20,22 @@ export class SheetsApiService {
     ['https://www.googleapis.com/auth/spreadsheets']
   );
 
+  private sheets = google.sheets({
+    version: 'v4',
+    auth: this.googleAuthClient,
+  });
+
   constructor() {
     console.log('SheetsApiService constructor');
   }
 
-  async getCategories() {
-    const sheets = google.sheets({
-      version: 'v4',
-      auth: this.googleAuthClient,
-    });
-
-    const batchGet = await sheets.spreadsheets.values.batchGet({
-      spreadsheetId: this.spredsheetId,
-      ranges: [CategoriesRages.INCOME, CategoriesRages.EXPENSES],
+  async getCategories(): Promise<{
+    incomeCategories: Category[];
+    expenseCategories: Category[];
+  }> {
+    const batchGet = await this.sheets.spreadsheets.values.batchGet({
+      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      ranges: [AllCategoriesRages.INCOME, AllCategoriesRages.EXPENSES],
       valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
     });
 
@@ -59,11 +55,34 @@ export class SheetsApiService {
     };
   }
 
+  async getTotalIncomeExpenses(): Promise<{
+    totalIncome: number;
+    totalExpenses: number;
+  }> {
+    const sheetName = `${SheetName.JANUARY}!A1:E20`;
+
+    const {
+      data: { values },
+    } = await this.sheets.spreadsheets.values.get({
+      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      range: sheetName,
+      valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
+    });
+
+    const totalIncome = values![15][3] || null;
+    const totalExpenses = values![16][3] || null;
+
+    return {
+      totalIncome,
+      totalExpenses,
+    };
+  }
+
   private convertResponseToCategoriesWithSubCategories(
-    expenseCategories: string[][],
+    categories: string[][],
     itemsInCategory: number
   ) {
-    const allCategories = expenseCategories.map((x) => x[0]);
+    const allCategories = categories.map((x) => x[0]);
     let mainCategoriesWithSubCategories = [];
     for (let i = 0; i < allCategories.length; i += itemsInCategory) {
       const all = allCategories.slice(i, i + itemsInCategory);
@@ -77,31 +96,5 @@ export class SheetsApiService {
       });
     }
     return mainCategoriesWithSubCategories;
-  }
-
-  async getTotalIncomeExpenses(): Promise<{
-    totalIncome: number;
-    totalExpenses: number;
-  }> {
-    const sheetName = `${SheetName.JANUARY}!A1:E20`;
-    const sheets = google.sheets({
-      version: 'v4',
-      auth: this.googleAuthClient,
-    });
-    const {
-      data: { values },
-    } = await sheets.spreadsheets.values.get({
-      spreadsheetId: this.spredsheetId,
-      range: sheetName,
-      valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
-    });
-
-    const totalIncome = values![15][3] || null;
-    const totalExpenses = values![16][3] || null;
-
-    return {
-      totalIncome,
-      totalExpenses,
-    };
   }
 }

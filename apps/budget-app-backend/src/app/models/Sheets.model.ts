@@ -22,7 +22,11 @@ export enum ValueRenderOption {
   FORMULA = 'FORMULA',
 }
 
-export const CategoriesRages = {
+export const AllCategoriesRages = {
   INCOME: `${SheetName.CATEGORIES}!B14:C29`,
   EXPENSES: `${SheetName.CATEGORIES}!B35:C213`,
+};
+
+export const MonthExpensesRages = {
+  EXPENSES: `${SheetName.CATEGORIES}!B79:E257`,
 };

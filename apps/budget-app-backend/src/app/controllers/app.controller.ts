@@ -5,11 +5,6 @@ import { AppService } from '../services/app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('abc')
-  getData() {
-    return this.appService.getData();
-  }
-
   @Get('sub-categories')
   getCategories() {
     return {
@@ -78,34 +73,6 @@ export class AppController {
           id: 13,
           name: 'książki',
           mainCategoryId: 5,
-        },
-      ],
-    };
-  }
-
-  @Get('categories')
-  getMainCategories() {
-    return {
-      mainCategories: [
-        {
-          id: 1,
-          name: 'Jedzenie',
-        },
-        {
-          id: 2,
-          name: 'Mieszkanie/Dom',
-        },
-        {
-          id: 3,
-          name: 'Transport',
-        },
-        {
-          id: 4,
-          name: 'Telekomunikacja',
-        },
-        {
-          id: 5,
-          name: 'Rozrywka',
         },
       ],
     };

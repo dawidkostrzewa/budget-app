@@ -48,3 +48,5 @@ Thumbs.db
 credentials.json
 token.json
 google-auth.json
+
+.env
