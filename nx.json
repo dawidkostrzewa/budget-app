@@ -1,5 +1,5 @@
 {
-  "npmScope": "budget-app-front",
+  "npmScope": "budgetapp",
   "affected": {
     "defaultBase": "undefined"
   },
@@ -14,5 +14,5 @@
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   },
-  "defaultProject": "budget-app-front"
+  "defaultProject": "UI"
 }

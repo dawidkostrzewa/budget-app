@@ -14,10 +14,10 @@ describe('AppController', () => {
   });
 
   describe('getData', () => {
-    it('should return "Welcome to budget-app-backend!"', () => {
+    it('should return "Welcome to backend!"', () => {
       const appController = app.get<AppController>(AppController);
       expect(appController.getData()).toEqual({
-        message: 'Welcome to budget-app-backend!',
+        message: 'Welcome to backend!',
       });
     });
   });

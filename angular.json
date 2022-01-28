@@ -3,19 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "budget-app-backend": {
-      "root": "apps/budget-app-backend",
-      "sourceRoot": "apps/budget-app-backend/src",
+    "backend": {
+      "root": "apps/backend",
+      "sourceRoot": "apps/backend/src",
       "projectType": "application",
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/budget-app-backend",
-            "main": "apps/budget-app-backend/src/main.ts",
-            "tsConfig": "apps/budget-app-backend/tsconfig.app.json",
-            "assets": ["apps/budget-app-backend/src/assets"]
+            "outputPath": "dist/apps/backend",
+            "main": "apps/backend/src/main.ts",
+            "tsConfig": "apps/backend/tsconfig.app.json",
+            "assets": ["apps/backend/src/assets"]
           },
           "configurations": {
             "production": {
@@ -24,8 +24,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/budget-app-backend/src/environments/environment.ts",
-                  "with": "apps/budget-app-backend/src/environments/environment.prod.ts"
+                  "replace": "apps/backend/src/environments/environment.ts",
+                  "with": "apps/backend/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -34,28 +34,28 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "budget-app-backend:build"
+            "buildTarget": "backend:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": ["apps/budget-app-backend/**/*.ts"]
+            "lintFilePatterns": ["apps/backend/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/budget-app-backend"],
+          "outputs": ["coverage/apps/backend"],
           "options": {
-            "jestConfig": "apps/budget-app-backend/jest.config.js",
+            "jestConfig": "apps/backend/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
       "tags": []
     },
-    "budget-app-front": {
+    "UI": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -65,26 +65,23 @@
           "strict": true
         }
       },
-      "root": "apps/budget-app-front",
-      "sourceRoot": "apps/budget-app-front/src",
+      "root": "apps/UI",
+      "sourceRoot": "apps/UI/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/budget-app-front",
-            "index": "apps/budget-app-front/src/index.html",
-            "main": "apps/budget-app-front/src/main.ts",
-            "polyfills": "apps/budget-app-front/src/polyfills.ts",
-            "tsConfig": "apps/budget-app-front/tsconfig.json",
+            "outputPath": "dist/apps/UI",
+            "index": "apps/UI/src/index.html",
+            "main": "apps/UI/src/main.ts",
+            "polyfills": "apps/UI/src/polyfills.ts",
+            "tsConfig": "apps/UI/tsconfig.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "apps/budget-app-front/src/favicon.ico",
-              "apps/budget-app-front/src/assets"
-            ],
+            "assets": ["apps/UI/src/favicon.ico", "apps/UI/src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/budget-app-front/src/styles.scss"
+              "apps/UI/src/styles.scss"
             ],
             "scripts": []
           },
@@ -104,8 +101,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/budget-app-front/src/environments/environment.ts",
-                  "with": "apps/budget-app-front/src/environments/environment.prod.ts"
+                  "replace": "apps/UI/src/environments/environment.ts",
+                  "with": "apps/UI/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -125,10 +122,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "budget-app-front:build:production"
+              "browserTarget": "UI:build:production"
             },
             "development": {
-              "browserTarget": "budget-app-front:build:development"
+              "browserTarget": "UI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -136,24 +133,21 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "budget-app-front:build"
+            "browserTarget": "UI:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "apps/budget-app-front/src/test.ts",
-            "polyfills": "apps/budget-app-front/src/polyfills.ts",
-            "tsConfig": "apps/budget-app-front/tsconfig.spec.json",
-            "karmaConfig": "apps/budget-app-front/karma.conf.js",
+            "main": "apps/UI/src/test.ts",
+            "polyfills": "apps/UI/src/polyfills.ts",
+            "tsConfig": "apps/UI/tsconfig.spec.json",
+            "karmaConfig": "apps/UI/karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "apps/budget-app-front/src/favicon.ico",
-              "apps/budget-app-front/src/assets"
-            ],
+            "assets": ["apps/UI/src/favicon.ico", "apps/UI/src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/budget-app-front/src/styles.scss"
+              "apps/UI/src/styles.scss"
             ],
             "scripts": []
           }
@@ -162,10 +156,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
-            "tsConfig": [
-              "apps/budget-app-front/tsconfig.json",
-              "apps/budget-app-front/tsconfig.spec.json"
-            ]
+            "tsConfig": ["apps/UI/tsconfig.json", "apps/UI/tsconfig.spec.json"]
           }
         }
       }

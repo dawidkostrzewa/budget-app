@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'budget-app-backend',
+  displayName: 'backend',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/budget-app-backend',
+  coverageDirectory: '../../coverage/apps/backend',
 };

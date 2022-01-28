@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "nx": "nx",
-    "start:backend": "npx nx serve budget-app-backend",
+    "start:backend": "npx nx serve backend",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
