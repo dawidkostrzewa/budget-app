@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { TransactionsFacade } from './+state/transactions.facade';
+import { TransactionsFacade } from './+state/Transactions/transactions.facade';
 import { ApiService } from '../api/api.service';
-import { CategoryFacade } from './+state/category.facade';
-import { TransactionsService } from './+state/transactions.service';
-import { map } from 'rxjs/operators';
+import { CategoryFacade } from './+state/Category/category.facade';
+import { TransactionsService } from './+state/Transactions/transactions.service';
+import { map, single } from 'rxjs/operators';
+import { CategoryAmountSummary } from './+state/Category/category.model';
 
 @Component({
   selector: 'app-home-page',
@@ -34,20 +35,11 @@ import { map } from 'rxjs/operators';
         <div>Suma: {{ expensesAmount$ | async }}</div>
         <mat-tab-group>
           <mat-tab
-            *ngFor="let cat of categoryFacade.allMainCategories$ | async"
-            [label]="cat.name"
+            *ngFor="let cat of mainCategories$ | async as mainCategories"
+            [label]="cat"
           >
             <app-category-transactions
-              [transactions]="
-                this.transactionService.getAllTransactionsByMainCategoryName(
-                  cat.name
-                ) | async
-              "
-              [summary]="
-                (this.transactionService.getTransactionsAmountSummaryByMainCategory(
-                  cat.id
-                ) | async) || []
-              "
+              [summary]="(getSummary(cat) | async) || []"
             ></app-category-transactions>
           </mat-tab>
         </mat-tab-group>
@@ -71,6 +63,8 @@ export class HomePageComponent implements OnInit {
   income = 1200;
   result$: Observable<number> = of(0);
 
+  mainCategories$: Observable<string[]> = of([]);
+
   constructor(
     public readonly transactionsFacade: TransactionsFacade,
     public readonly categoryFacade: CategoryFacade,
@@ -83,6 +77,27 @@ export class HomePageComponent implements OnInit {
 
     this.result$ = combineLatest([this.expensesAmount$]).pipe(
       map(([expenses]) => this.income - expenses)
+    );
+
+    this.mainCategories$ = this.transactionsFacade.expenses$.pipe(
+      map((expenses) => expenses.map((e) => e.mainCategory.name))
+    );
+  }
+
+  getSummary(categoryName: string): Observable<CategoryAmountSummary[]> {
+    return this.transactionsFacade.expenses$.pipe(
+      map((expenses) =>
+        expenses.find((e) => e.mainCategory.name === categoryName)
+      ),
+      map((singleCategory) => singleCategory?.subCategories),
+      map((subCategories) =>
+        subCategories
+          ? subCategories?.map((subCategory) => ({
+              category: subCategory.name,
+              amount: subCategory.real,
+            }))
+          : []
+      )
     );
   }
 }

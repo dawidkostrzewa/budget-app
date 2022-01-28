@@ -102,8 +102,8 @@ export class SheetsApiService {
 
     return {
       month: SheetNameMap.get(month)!,
-      totalPlanned: valueRanges![1].values![0]![0],
-      totalReal: valueRanges![1].values![0]![1],
+      totalPlanned: valueRanges![1].values![0]![0].toFixed(2),
+      totalReal: valueRanges![1].values![0]![1].toFixed(2),
       expenses: this.converResponseToCategoriesWithValues(
         valueRanges![0].values!
       ),
