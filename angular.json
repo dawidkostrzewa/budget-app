@@ -76,7 +76,7 @@
             "index": "apps/budget-app-front/src/index.html",
             "main": "apps/budget-app-front/src/main.ts",
             "polyfills": "apps/budget-app-front/src/polyfills.ts",
-            "tsConfig": "apps/budget-app-front/tsconfig.app.json",
+            "tsConfig": "apps/budget-app-front/tsconfig.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "apps/budget-app-front/src/favicon.ico",
@@ -163,7 +163,7 @@
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
             "tsConfig": [
-              "apps/budget-app-front/tsconfig.app.json",
+              "apps/budget-app-front/tsconfig.json",
               "apps/budget-app-front/tsconfig.spec.json"
             ]
           }
