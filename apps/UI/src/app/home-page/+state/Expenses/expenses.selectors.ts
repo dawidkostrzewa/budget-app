@@ -10,12 +10,18 @@ const selectAllExpenses = createSelector(
   (state) => state.expenses
 );
 
-const selectTotal = createSelector(
+const selectTotalExpenses = createSelector(
   selectExpensesState,
   (state) => state.totalReal
 );
 
+const selectTotalIncome = createSelector(
+  selectExpensesState,
+  (state) => state.totalIncome
+);
+
 export const ExpensesSelectors = {
   selectAllExpenses,
-  selectTotal,
+  selectTotalExpenses,
+  selectTotalIncome,
 };

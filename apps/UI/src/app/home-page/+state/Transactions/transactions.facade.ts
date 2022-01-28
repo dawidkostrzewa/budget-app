@@ -34,7 +34,10 @@ export class TransactionsFacade {
     CategoriesSelectors.selectAllMainCategories
   );
   expensesAmount$: Observable<number> = this.store.select(
-    ExpensesSelectors.selectTotal
+    ExpensesSelectors.selectTotalExpenses
+  );
+  incomeAmount$: Observable<number> = this.store.select(
+    ExpensesSelectors.selectTotalIncome
   );
 
   expenses$ = this.store.select(ExpensesSelectors.selectAllExpenses);

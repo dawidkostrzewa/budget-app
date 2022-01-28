@@ -11,11 +11,12 @@ export const expensesInitialState: MonthExpesesResponse = {
   totalPlanned: 0,
   totalReal: 0,
   expenses: [],
+  totalIncome: 0,
 };
 
 const reducer = createReducer(
   expensesInitialState,
-  on(ExpensesActions.loadExpenses, (state, { expenses }) => {
+  on(ExpensesActions.loadExpenses, (_, { expenses }) => {
     return { ...expenses };
   })
 );

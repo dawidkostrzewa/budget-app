@@ -61,8 +61,9 @@ export class SheetsApiService {
     totalIncome: number;
     totalExpenses: number;
   }> {
-    const sheetName = `${SheetNameMap.get(SheetName.JANUARY)}!A1:E20`;
-
+    //TODO: paramiterize by month
+    const currentMonth = this.getCurrentMonth().toUpperCase() as SheetName;
+    const sheetName = `${SheetNameMap.get(currentMonth)}!D16:D17`;
     const {
       data: { values },
     } = await this.sheets.spreadsheets.values.get({
@@ -71,8 +72,8 @@ export class SheetsApiService {
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });
 
-    const totalIncome = values![15][3] || null;
-    const totalExpenses = values![16][3] || null;
+    const totalIncome = values![0][0] || null;
+    const totalExpenses = values![1][0] || null;
 
     return {
       totalIncome,
@@ -80,12 +81,11 @@ export class SheetsApiService {
     };
   }
 
+  //TODO: wrong month error handling
   async getMonthExpenses(params: {
     month: SheetName;
   }): Promise<MonthExpesesResponse> {
-    const currentMonth = new Intl.DateTimeFormat('en-US', {
-      month: 'long',
-    }).format(new Date());
+    const currentMonth = this.getCurrentMonth();
     const month = params.month
       ? (params.month.toUpperCase() as SheetName)
       : (currentMonth.toUpperCase() as SheetName);
@@ -96,17 +96,21 @@ export class SheetsApiService {
       ranges: [
         `${SheetNameMap.get(month)}${MonthExpensesRages.EXPENSES}`,
         `${SheetNameMap.get(month)}!C77:D78`,
+        `${SheetNameMap.get(month)}!D16:D17`,
       ],
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });
 
+    console.log(valueRanges![2].values![0]![0].toFixed(2));
+
     return {
       month: SheetNameMap.get(month)!,
       totalPlanned: valueRanges![1].values![0]![0].toFixed(2),
-      totalReal: valueRanges![1].values![0]![1].toFixed(2),
+      totalReal: valueRanges![1].values![0]![0].toFixed(2),
       expenses: this.converResponseToCategoriesWithValues(
         valueRanges![0].values!
       ),
+      totalIncome: valueRanges![2].values![0]![0].toFixed(2),
     };
   }
 
@@ -155,5 +159,11 @@ export class SheetsApiService {
       });
     }
     return mainCategoriesWithSubCategories;
+  }
+
+  private getCurrentMonth() {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'long',
+    }).format(new Date());
   }
 }

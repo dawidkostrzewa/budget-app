@@ -14,4 +14,6 @@ export interface MonthExpesesResponse {
   totalPlanned: number;
   totalReal: number;
   expenses: BudgetCategory[];
+  //TODO: move to proper place, when income reducred will be created
+  totalIncome: number;
 }

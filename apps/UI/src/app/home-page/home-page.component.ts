@@ -15,24 +15,28 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
-          <mat-card-content>{{ income }}</mat-card-content>
+          <mat-card-content>{{
+            transactionsFacade.incomeAmount$ | async | price
+          }}</mat-card-content>
         </mat-card>
 
         <mat-card class="color-red">
           <mat-card-title>Wydatki</mat-card-title>
-          <mat-card-content>{{ expensesAmount$ | async }}</mat-card-content>
+          <mat-card-content>{{
+            expensesAmount$ | async | price
+          }}</mat-card-content>
         </mat-card>
         <mat-card
           [ngClass]="(result$ | async)! > 0 ? 'color-green' : 'color-red'"
         >
           <mat-card-title>Do wydania pozostało:</mat-card-title>
-          <mat-card-content>{{ result$ | async }}</mat-card-content>
+          <mat-card-content>{{ result$ | async | price }}</mat-card-content>
         </mat-card>
       </div>
       <mat-divider></mat-divider>
       <div>
         <h2>Wydatki</h2>
-        <div>Suma: {{ expensesAmount$ | async }}</div>
+        <div>Suma: {{ expensesAmount$ | async | price }}</div>
         <mat-tab-group>
           <mat-tab
             *ngFor="let cat of mainCategories$ | async as mainCategories"
@@ -47,7 +51,7 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
       <mat-divider></mat-divider>
       <div>
         <h2>Wpływy</h2>
-        <div>Suma: {{ income }}</div>
+        <div>Suma: {{ transactionsFacade.incomeAmount$ | async | price }}</div>
       </div>
     </main>
   `,
@@ -60,6 +64,7 @@ export class HomePageComponent implements OnInit {
   currentYear = this.today.getFullYear();
 
   expensesAmount$: Observable<number> | undefined;
+  incomeAmount$: Observable<number> | undefined;
   income = 1200;
   result$: Observable<number> = of(0);
 
@@ -74,10 +79,12 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.expensesAmount$ = this.transactionsFacade.expensesAmount$;
+    this.incomeAmount$ = this.transactionsFacade.incomeAmount$;
 
-    this.result$ = combineLatest([this.expensesAmount$]).pipe(
-      map(([expenses]) => this.income - expenses)
-    );
+    this.result$ = combineLatest([
+      this.expensesAmount$,
+      this.incomeAmount$,
+    ]).pipe(map(([expenses, income]) => income - expenses));
 
     this.mainCategories$ = this.transactionsFacade.expenses$.pipe(
       map((expenses) => expenses.map((e) => e.mainCategory.name))
