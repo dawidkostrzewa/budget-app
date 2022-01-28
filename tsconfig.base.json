@@ -15,11 +15,10 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {},
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@budgetapp/category-models": ["libs/category-models/src/index.ts"]
+    },
     "rootDir": "."
   },
   "angularCompilerOptions": {

@@ -8,7 +8,10 @@ import {
   ValueRenderOption,
 } from '../../models/Sheets.model';
 
-import { Category } from '../../models/Categories.model';
+import {
+  BudgetCategory,
+  MonthExpesesResponse,
+} from '@budgetapp/category-models';
 const keys = require('/google-auth.json');
 
 @Injectable()
@@ -31,10 +34,7 @@ export class SheetsApiService {
     console.log('SheetsApiService constructor');
   }
 
-  async getCategories(): Promise<{
-    incomeCategories: Category[];
-    expenseCategories: Category[];
-  }> {
+  async getCategories() {
     const batchGet = await this.sheets.spreadsheets.values.batchGet({
       spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
       ranges: [AllCategoriesRages.INCOME, AllCategoriesRages.EXPENSES],
@@ -80,7 +80,9 @@ export class SheetsApiService {
     };
   }
 
-  async getMonthExpenses(params: { month: SheetName }) {
+  async getMonthExpenses(params: {
+    month: SheetName;
+  }): Promise<MonthExpesesResponse> {
     const currentMonth = new Intl.DateTimeFormat('en-US', {
       month: 'long',
     }).format(new Date());
@@ -91,7 +93,6 @@ export class SheetsApiService {
       data: { valueRanges },
     } = await this.sheets.spreadsheets.values.batchGet({
       spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
-      //TODO: get current month
       ranges: [
         `${SheetNameMap.get(month)}${MonthExpensesRages.EXPENSES}`,
         `${SheetNameMap.get(month)}!C77:D78`,
@@ -100,7 +101,7 @@ export class SheetsApiService {
     });
 
     return {
-      month: SheetNameMap.get(month),
+      month: SheetNameMap.get(month)!,
       totalPlanned: valueRanges![1].values![0]![0],
       totalReal: valueRanges![1].values![0]![1],
       expenses: this.converResponseToCategoriesWithValues(
@@ -112,7 +113,7 @@ export class SheetsApiService {
   private converResponseToCategoriesWithValues(
     categories: any[][],
     itemsInCategory: number = 12
-  ) {
+  ): BudgetCategory[] {
     const allCategories = categories.map((x) => ({
       name: x[0],
       planned: x[1],
