@@ -14,7 +14,7 @@ import { TransactionWithCategoryName } from '../+state/Transactions/transaction.
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef>Suma</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.amount | price }} PLN
+        {{ element.amount | price }}
       </td>
     </ng-container>
 

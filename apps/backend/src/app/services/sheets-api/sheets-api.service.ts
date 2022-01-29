@@ -101,12 +101,10 @@ export class SheetsApiService {
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });
 
-    console.log(valueRanges![2].values![0]![0].toFixed(2));
-
     return {
       month: SheetNameMap.get(month)!,
       totalPlanned: valueRanges![1].values![0]![0].toFixed(2),
-      totalReal: valueRanges![1].values![0]![0].toFixed(2),
+      totalReal: valueRanges![2].values![1]![0].toFixed(2),
       expenses: this.converResponseToCategoriesWithValues(
         valueRanges![0].values!
       ),

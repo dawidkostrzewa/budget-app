@@ -4,39 +4,46 @@ import { TransactionsFacade } from './+state/Transactions/transactions.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/Category/category.facade';
 import { TransactionsService } from './+state/Transactions/transactions.service';
-import { map, single } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CategoryAmountSummary } from './+state/Category/category.model';
 
 @Component({
   selector: 'app-home-page',
   template: `
     <main>
-      <h2>Aktualny miesiac: {{ currentMonth }} {{ currentYear }}</h2>
+      <h2>{{ currentMonth }} {{ currentYear }}</h2>
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
-          <mat-card-content>{{
-            transactionsFacade.incomeAmount$ | async | price
-          }}</mat-card-content>
+          <mat-card-content>
+            <span class="summary-cards__content">{{
+              transactionsFacade.incomeAmount$ | async | price
+            }}</span></mat-card-content
+          >
         </mat-card>
 
         <mat-card class="color-red">
           <mat-card-title>Wydatki</mat-card-title>
-          <mat-card-content>{{
-            expensesAmount$ | async | price
-          }}</mat-card-content>
+          <mat-card-content>
+            <span class="summary-cards__content">{{
+              expensesAmount$ | async | price
+            }}</span></mat-card-content
+          >
         </mat-card>
         <mat-card
           [ngClass]="(result$ | async)! > 0 ? 'color-green' : 'color-red'"
         >
           <mat-card-title>Do wydania pozostało:</mat-card-title>
-          <mat-card-content>{{ result$ | async | price }}</mat-card-content>
+          <mat-card-content
+            ><span class="summary-cards__content">{{
+              result$ | async | price
+            }}</span></mat-card-content
+          >
         </mat-card>
       </div>
       <mat-divider></mat-divider>
       <div>
         <h2>Wydatki</h2>
-        <div>Suma: {{ expensesAmount$ | async | price }}</div>
         <mat-tab-group>
           <mat-tab
             *ngFor="let cat of mainCategories$ | async as mainCategories"
