@@ -18,4 +18,9 @@ export class TransactionController {
   getCurrentMonthExpenses(@Query() param: { month: SheetName }) {
     return this.sheetService.getMonthExpenses(param);
   }
+
+  @Get('expenses/all')
+  getAllExpenses() {
+    return this.sheetService.getAllExpenses();
+  }
 }

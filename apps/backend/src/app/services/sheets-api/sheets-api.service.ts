@@ -105,10 +105,52 @@ export class SheetsApiService {
       month: SheetNameMap.get(month)!,
       totalPlanned: valueRanges![1].values![0]![0].toFixed(2),
       totalReal: valueRanges![2].values![1]![0].toFixed(2),
+      totalIncome: valueRanges![2].values![0]![0].toFixed(2),
       expenses: this.converResponseToCategoriesWithValues(
         valueRanges![0].values!
       ),
-      totalIncome: valueRanges![2].values![0]![0].toFixed(2),
+    };
+  }
+
+  async getAllExpenses() {
+    const ranges = [];
+    for (let sheet in SheetName) {
+      if (
+        sheet !== SheetName.ACCOUTNS &&
+        sheet !== SheetName.ALL_YEAR &&
+        sheet !== SheetName.CATEGORIES
+      ) {
+        ranges.push(
+          `${SheetNameMap.get(sheet as SheetName)}${
+            MonthExpensesRages.EXPENSES
+          }`,
+          `${SheetNameMap.get(sheet as SheetName)}!C77:D78`,
+          `${SheetNameMap.get(sheet as SheetName)}!D16:D17`
+        );
+      }
+    }
+
+    const {
+      data: { valueRanges },
+    } = await this.sheets.spreadsheets.values.batchGet({
+      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      ranges: ranges,
+      valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
+    });
+    const allExpenses = [];
+    for (let i = 0; i < valueRanges!.length; i += 3) {
+      allExpenses.push({
+        month: valueRanges![i]!.range!.split('!')[0],
+        totalPlanned: valueRanges![i + 1].values![0]![0].toFixed(2),
+        totalReal: valueRanges![i + 2].values![1]![0].toFixed(2),
+        totalIncome: valueRanges![i + 2].values![0]![0].toFixed(2),
+        expenses: this.converResponseToCategoriesWithValues(
+          valueRanges![i].values!
+        ),
+      });
+    }
+    return {
+      expenses: allExpenses,
     };
   }
 
