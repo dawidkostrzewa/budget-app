@@ -4,14 +4,14 @@ import { BudgetFacade } from './+state/Budget/budget.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/Category/category.facade';
 import { TransactionsService } from './+state/Transactions/transactions.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { CategoryAmountSummary } from './+state/Category/category.model';
 
 @Component({
   selector: 'app-home-page',
   template: `
     <main>
-      <h2>{{ currentMonth }} {{ currentYear }}</h2>
+      <h2>{{ currentMonth$ | async | monthToName }} {{ currentYear }}</h2>
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
@@ -67,12 +67,13 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
 })
 export class HomePageComponent implements OnInit {
   private readonly today = new Date();
-  currentMonth = this.today.toLocaleString('default', { month: 'long' });
+  currentMonth$ = this.budgetFacade.currentMonth$.pipe(
+    tap((x) => console.log(x))
+  );
   currentYear = this.today.getFullYear();
 
   expensesAmount$: Observable<number> | undefined;
   incomeAmount$: Observable<number> | undefined;
-  income = 1200;
   result$: Observable<number> = of(0);
 
   mainCategories$: Observable<string[]> = of([]);

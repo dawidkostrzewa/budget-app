@@ -28,7 +28,8 @@ import {
   BUDGET_FEATURE,
 } from './home-page/+state/Budget/budget.reducer';
 
-import { PricePipe } from './shared/price.pipe';
+import { PricePipe } from './shared/pricePipe/price.pipe';
+import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PricePipe } from './shared/price.pipe';
     YearSummaryPageComponent,
     CategoryTransactionsComponent,
     PricePipe,
+    MonthToNamePipe,
   ],
   imports: [
     BrowserModule,

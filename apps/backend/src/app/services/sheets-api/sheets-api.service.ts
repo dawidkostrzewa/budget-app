@@ -141,9 +141,11 @@ export class SheetsApiService {
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });
     const allExpenses = [];
+    let monthId = 0;
     for (let i = 0; i < valueRanges!.length; i += 3) {
       allExpenses.push({
         //i.e. "Styczen!A1:B2"
+        monthId: monthId,
         month: valueRanges![i]!.range!.split('!')[0].replace(/'/g, ''),
         totalPlanned: valueRanges![i + 1].values![0]![0].toFixed(2),
         totalReal: valueRanges![i + 2].values![1]![0].toFixed(2),
@@ -152,6 +154,7 @@ export class SheetsApiService {
           valueRanges![i].values!
         ),
       });
+      monthId++;
     }
     this.cachedAllExpenses = allExpenses;
     return {
