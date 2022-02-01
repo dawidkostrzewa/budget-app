@@ -6,10 +6,17 @@ import { AppService } from './services/app.service';
 import { SheetsApiService } from './services/sheets-api/sheets-api.service';
 import { TransactionController } from './controllers/transaction/transaction.controller';
 import { CategoriesController } from './controllers/categories/categories.controller';
+import { BudgetController } from './controllers/budget/budget.controller';
+import { BudgetService } from './services/budget/budget.service';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  controllers: [AppController, TransactionController, CategoriesController],
-  providers: [AppService, SheetsApiService],
+  controllers: [
+    AppController,
+    TransactionController,
+    CategoriesController,
+    BudgetController,
+  ],
+  providers: [AppService, SheetsApiService, BudgetService],
 })
 export class AppModule {}

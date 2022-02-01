@@ -55,7 +55,7 @@ export class ApiService {
 
   loadBudget() {
     this.http
-      .get<BudgetResponse>(`${this.API_URL}/transaction/expenses/all`)
+      .get<BudgetResponse>(`${this.API_URL}/budget`)
       .subscribe((budget) =>
         this.store.dispatch(BudgetActions.loadBudget(budget))
       );
