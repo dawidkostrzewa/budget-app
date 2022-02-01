@@ -1,1 +1,1 @@
-export const getCurrentMonth = () => new Date().getMonth() + 1;
+export const getCurrentMonth = () => new Date().getMonth();

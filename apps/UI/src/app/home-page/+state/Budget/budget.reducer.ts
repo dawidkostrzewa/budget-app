@@ -25,6 +25,12 @@ const reducer = createReducer(
 
   on(BudgetActions.loadBudget, (state, { budget }) => {
     return adapter.upsertMany(budget, state);
+  }),
+  on(BudgetActions.showNextMonth, (state) => {
+    return { ...state, currentMonth: state.currentMonth + 1 };
+  }),
+  on(BudgetActions.showPrevMonth, (state) => {
+    return { ...state, currentMonth: state.currentMonth - 1 };
   })
 );
 

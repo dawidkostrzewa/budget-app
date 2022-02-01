@@ -9,14 +9,21 @@ import { BudgetSelectors } from './budget.selectors';
 export class BudgetFacade {
   constructor(private readonly store: Store) {}
 
-  expensesAmount$: Observable<number> = this.store.select(
-    BudgetSelectors.selectCurrentMonthTotalExpensesAmount
-  );
-  incomeAmount$: Observable<number> = this.store.select(
-    BudgetSelectors.selectCurrentMonthTotalIncome
-  );
+  getExpenses(month: number) {
+    return this.store.select(BudgetSelectors.selectCurrentMonthExpenses(month));
+  }
 
-  expenses$ = this.store.select(BudgetSelectors.selectCurrentMonthExpenses);
+  getExpensesAmount(month: number): Observable<number> {
+    return this.store.select(
+      BudgetSelectors.selectCurrentMonthTotalExpensesAmount(month)
+    );
+  }
+
+  getIncomeAmount(month: number): Observable<number> {
+    return this.store.select(
+      BudgetSelectors.selectCurrentMonthTotalIncome(month)
+    );
+  }
 
   currentMonth$: Observable<number> = this.store.select(
     BudgetSelectors.selectCurrentMonth

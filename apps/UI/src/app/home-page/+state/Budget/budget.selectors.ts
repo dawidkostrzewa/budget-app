@@ -1,8 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromBudget from './budget.reducer';
-import { getCurrentMonth } from '../../../utils/date.utils';
-
-const CURRENT_MONTH = getCurrentMonth();
 
 const selectBudgetState = createFeatureSelector<fromBudget.IBudgetState>(
   fromBudget.BUDGET_FEATURE
@@ -21,22 +18,22 @@ const selectFullBudget = createSelector(
   fromBudget.selectors.selectAll
 );
 
-const selectCurrentMonthExpenses = createSelector(
-  selectBudgetByMonth(CURRENT_MONTH),
-  (budget) => {
+const selectCurrentMonthExpenses = (month: number) =>
+  createSelector(selectBudgetByMonth(month), (budget) => {
     return budget?.expenses || [];
-  }
-);
+  });
 
-const selectCurrentMonthTotalIncome = createSelector(
-  selectBudgetByMonth(CURRENT_MONTH),
-  (budget) => budget?.totalIncome || 0
-);
+const selectCurrentMonthTotalIncome = (month: number) =>
+  createSelector(
+    selectBudgetByMonth(month),
+    (budget) => budget?.totalIncome || 0
+  );
 
-const selectCurrentMonthTotalExpensesAmount = createSelector(
-  selectBudgetByMonth(CURRENT_MONTH),
-  (budget) => budget?.totalReal || 0
-);
+const selectCurrentMonthTotalExpensesAmount = (month: number) =>
+  createSelector(
+    selectBudgetByMonth(month),
+    (budget) => budget?.totalReal || 0
+  );
 
 const selectCurrentMonth = createSelector(
   selectBudgetState,

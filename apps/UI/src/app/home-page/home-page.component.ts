@@ -4,20 +4,24 @@ import { BudgetFacade } from './+state/Budget/budget.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/Category/category.facade';
 import { TransactionsService } from './+state/Transactions/transactions.service';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { CategoryAmountSummary } from './+state/Category/category.model';
+import { Store } from '@ngrx/store';
+import { BudgetActions } from './+state/Budget/budget.actions';
 
 @Component({
   selector: 'app-home-page',
   template: `
     <main>
       <h2>{{ currentMonth$ | async | monthToName }} {{ currentYear }}</h2>
+      <button (click)="goToPrevMonth()">Poprzedni miesiąc</button>
+      <button (click)="goToNextMonth()">Następny miesiąch</button>
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
           <mat-card-content>
             <span class="summary-cards__content">{{
-              budgetFacade.incomeAmount$ | async | price
+              incomeAmount$ | async | price
             }}</span></mat-card-content
           >
         </mat-card>
@@ -58,7 +62,7 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
       <mat-divider></mat-divider>
       <div>
         <h2>Wpływy</h2>
-        <div>Suma: {{ budgetFacade.incomeAmount$ | async | price }}</div>
+        <div>Suma: {{ incomeAmount$ | async | price }}</div>
       </div>
     </main>
   `,
@@ -82,37 +86,51 @@ export class HomePageComponent implements OnInit {
     public readonly budgetFacade: BudgetFacade,
     public readonly categoryFacade: CategoryFacade,
     public readonly transactionService: TransactionsService,
-    public readonly apiService: ApiService
+    public readonly apiService: ApiService,
+    private readonly store: Store
   ) {}
 
   ngOnInit() {
-    this.expensesAmount$ = this.budgetFacade.expensesAmount$;
-    this.incomeAmount$ = this.budgetFacade.incomeAmount$;
+    this.expensesAmount$ = this.budgetFacade.currentMonth$.pipe(
+      switchMap((month) => this.budgetFacade.getExpensesAmount(month))
+    );
+    this.incomeAmount$ = this.budgetFacade.currentMonth$.pipe(
+      switchMap((month) => this.budgetFacade.getIncomeAmount(month))
+    );
 
     this.result$ = combineLatest([
       this.expensesAmount$,
       this.incomeAmount$,
     ]).pipe(map(([expenses, income]) => income - expenses));
 
-    this.mainCategories$ = this.budgetFacade.expenses$.pipe(
-      map((expenses) => expenses.map((e) => e.mainCategory.name))
-    );
+    this.mainCategories$ = this.budgetFacade.currentMonth$
+      .pipe(switchMap((month) => this.budgetFacade.getExpenses(month)))
+      .pipe(map((expenses) => expenses.map((e) => e.mainCategory.name)));
   }
 
   getSummary(categoryName: string): Observable<CategoryAmountSummary[]> {
-    return this.budgetFacade.expenses$.pipe(
-      map((expenses) =>
-        expenses.find((e) => e.mainCategory.name === categoryName)
-      ),
-      map((singleCategory) => singleCategory?.subCategories),
-      map((subCategories) =>
-        subCategories
-          ? subCategories?.map((subCategory) => ({
-              category: subCategory.name,
-              amount: subCategory.real,
-            }))
-          : []
-      )
-    );
+    return this.budgetFacade.currentMonth$
+      .pipe(switchMap((month) => this.budgetFacade.getExpenses(month)))
+      .pipe(
+        map((expenses) =>
+          expenses.find((e) => e.mainCategory.name === categoryName)
+        ),
+        map((singleCategory) => singleCategory?.subCategories),
+        map((subCategories) =>
+          subCategories
+            ? subCategories?.map((subCategory) => ({
+                category: subCategory.name,
+                amount: subCategory.real,
+              }))
+            : []
+        )
+      );
+  }
+
+  goToNextMonth() {
+    this.store.dispatch(BudgetActions.showNextMonth());
+  }
+  goToPrevMonth() {
+    this.store.dispatch(BudgetActions.showPrevMonth());
   }
 }
