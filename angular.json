@@ -161,6 +161,29 @@
       },
       "tags": []
     },
+    "budget-models": {
+      "root": "libs/budget-models",
+      "sourceRoot": "libs/budget-models/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/budget-models/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/budget-models"],
+          "options": {
+            "jestConfig": "libs/budget-models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "category-models": {
       "root": "libs/category-models",
       "sourceRoot": "libs/category-models/src",

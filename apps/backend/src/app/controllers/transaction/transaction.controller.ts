@@ -21,6 +21,6 @@ export class TransactionController {
 
   @Get('expenses/all')
   getAllExpenses() {
-    return this.sheetService.getAllExpenses();
+    return this.sheetService.getAllInformation();
   }
 }

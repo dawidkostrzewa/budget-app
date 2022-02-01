@@ -24,9 +24,9 @@ import {
   CATEGORIES_FEATURE,
 } from './home-page/+state/Category/category.reducer';
 import {
-  expensesReducer,
-  EXPENSES_FEATURE,
-} from './home-page/+state/Expenses/expenses.reducer';
+  budgetReducer,
+  BUDGET_FEATURE,
+} from './home-page/+state/Budget/budget.reducer';
 
 import { PricePipe } from './shared/price.pipe';
 
@@ -49,7 +49,7 @@ import { PricePipe } from './shared/price.pipe';
     StoreModule.forRoot({
       [TRANSTACTIONS_FEATURE]: transactionsReducer,
       [CATEGORIES_FEATURE]: categoriesReducer,
-      [EXPENSES_FEATURE]: expensesReducer,
+      [BUDGET_FEATURE]: budgetReducer,
     }),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({

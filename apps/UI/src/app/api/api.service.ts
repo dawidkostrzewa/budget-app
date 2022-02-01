@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TransactionsActions } from '../home-page/+state/Transactions/transactions.actions';
-import { ExpensesActions } from '../home-page/+state/Expenses/expenses.actions';
 import { Transaction } from '../home-page/+state/Transactions/transaction.model';
 import {
   Category,
   MainCategory,
 } from '../home-page/+state/Category/category.model';
-import { MonthExpesesResponse } from '@budgetapp/category-models';
+import { BudgetResponse } from '@budgetapp/budget-models';
+import { BudgetActions } from '../home-page/+state/Budget/budget.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class ApiService {
   ) {
     this.loadCategories();
     this.loadTransactions();
-    this.loadExpenses();
+    this.loadBudget();
   }
 
   API_URL = 'http://localhost:3333/api';
@@ -53,11 +53,11 @@ export class ApiService {
       );
   }
 
-  loadExpenses() {
+  loadBudget() {
     this.http
-      .get<MonthExpesesResponse>(`${this.API_URL}/transaction/expenses`)
-      .subscribe((expenses) =>
-        this.store.dispatch(ExpensesActions.loadExpenses({ expenses }))
+      .get<BudgetResponse>(`${this.API_URL}/transaction/expenses/all`)
+      .subscribe((budget) =>
+        this.store.dispatch(BudgetActions.loadBudget(budget))
       );
   }
 }

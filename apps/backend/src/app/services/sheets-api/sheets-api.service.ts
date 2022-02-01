@@ -8,15 +8,14 @@ import {
   ValueRenderOption,
 } from '../../models/Sheets.model';
 
-import {
-  BudgetCategory,
-  MonthExpesesResponse,
-} from '@budgetapp/category-models';
+import { Budget, BudgetCategory } from '@budgetapp/budget-models';
 const keys = require('/google-auth.json');
 
 @Injectable()
 export class SheetsApiService {
   private static SPREED_SHEET_ID = process.env.SPREAD_SHEET;
+
+  private cachedAllExpenses: Budget[] = [];
 
   private googleAuthClient = new google.auth.JWT(
     keys.client_email,
@@ -82,9 +81,7 @@ export class SheetsApiService {
   }
 
   //TODO: wrong month error handling
-  async getMonthExpenses(params: {
-    month: SheetName;
-  }): Promise<MonthExpesesResponse> {
+  async getMonthExpenses(params: { month: SheetName }) {
     const currentMonth = this.getCurrentMonth();
     const month = params.month
       ? (params.month.toUpperCase() as SheetName)
@@ -112,7 +109,13 @@ export class SheetsApiService {
     };
   }
 
-  async getAllExpenses() {
+  async getAllInformation() {
+    if (this.cachedAllExpenses.length) {
+      console.log('CACHED');
+      return {
+        budget: this.cachedAllExpenses,
+      };
+    }
     const ranges = [];
     for (let sheet in SheetName) {
       if (
@@ -140,7 +143,8 @@ export class SheetsApiService {
     const allExpenses = [];
     for (let i = 0; i < valueRanges!.length; i += 3) {
       allExpenses.push({
-        month: valueRanges![i]!.range!.split('!')[0],
+        //i.e. "Styczen!A1:B2"
+        month: valueRanges![i]!.range!.split('!')[0].replace(/'/g, ''),
         totalPlanned: valueRanges![i + 1].values![0]![0].toFixed(2),
         totalReal: valueRanges![i + 2].values![1]![0].toFixed(2),
         totalIncome: valueRanges![i + 2].values![0]![0].toFixed(2),
@@ -149,8 +153,9 @@ export class SheetsApiService {
         ),
       });
     }
+    this.cachedAllExpenses = allExpenses;
     return {
-      expenses: allExpenses,
+      budget: allExpenses,
     };
   }
 
@@ -164,7 +169,7 @@ export class SheetsApiService {
       real: x[2],
     }));
 
-    let mainCategoriesWithSubCategories = [];
+    const mainCategoriesWithSubCategories: BudgetCategory[] = [];
     for (let i = 0; i < allCategories.length; i += itemsInCategory) {
       const all = allCategories.slice(i, i + itemsInCategory);
       const mainCategory = all[0];

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { TransactionsFacade } from './+state/Transactions/transactions.facade';
+import { BudgetFacade } from './+state/Budget/budget.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/Category/category.facade';
 import { TransactionsService } from './+state/Transactions/transactions.service';
@@ -17,7 +17,7 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
           <mat-card-title>Wpływy</mat-card-title>
           <mat-card-content>
             <span class="summary-cards__content">{{
-              transactionsFacade.incomeAmount$ | async | price
+              budgetFacade.incomeAmount$ | async | price
             }}</span></mat-card-content
           >
         </mat-card>
@@ -58,7 +58,7 @@ import { CategoryAmountSummary } from './+state/Category/category.model';
       <mat-divider></mat-divider>
       <div>
         <h2>Wpływy</h2>
-        <div>Suma: {{ transactionsFacade.incomeAmount$ | async | price }}</div>
+        <div>Suma: {{ budgetFacade.incomeAmount$ | async | price }}</div>
       </div>
     </main>
   `,
@@ -78,28 +78,28 @@ export class HomePageComponent implements OnInit {
   mainCategories$: Observable<string[]> = of([]);
 
   constructor(
-    public readonly transactionsFacade: TransactionsFacade,
+    public readonly budgetFacade: BudgetFacade,
     public readonly categoryFacade: CategoryFacade,
     public readonly transactionService: TransactionsService,
     public readonly apiService: ApiService
   ) {}
 
   ngOnInit() {
-    this.expensesAmount$ = this.transactionsFacade.expensesAmount$;
-    this.incomeAmount$ = this.transactionsFacade.incomeAmount$;
+    this.expensesAmount$ = this.budgetFacade.expensesAmount$;
+    this.incomeAmount$ = this.budgetFacade.incomeAmount$;
 
     this.result$ = combineLatest([
       this.expensesAmount$,
       this.incomeAmount$,
     ]).pipe(map(([expenses, income]) => income - expenses));
 
-    this.mainCategories$ = this.transactionsFacade.expenses$.pipe(
+    this.mainCategories$ = this.budgetFacade.expenses$.pipe(
       map((expenses) => expenses.map((e) => e.mainCategory.name))
     );
   }
 
   getSummary(categoryName: string): Observable<CategoryAmountSummary[]> {
-    return this.transactionsFacade.expenses$.pipe(
+    return this.budgetFacade.expenses$.pipe(
       map((expenses) =>
         expenses.find((e) => e.mainCategory.name === categoryName)
       ),

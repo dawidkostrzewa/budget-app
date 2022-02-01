@@ -16,7 +16,6 @@ import {
 } from '../Category/category.model';
 import { Transaction, TransactionWithCategoryName } from './transaction.model';
 import { TransactionsSelectors } from './transactions.selectors';
-import { ExpensesSelectors } from '../Expenses/expenses.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -33,14 +32,6 @@ export class TransactionsFacade {
   mainCategories$: Observable<MainCategory[]> = this.store.select(
     CategoriesSelectors.selectAllMainCategories
   );
-  expensesAmount$: Observable<number> = this.store.select(
-    ExpensesSelectors.selectTotalExpenses
-  );
-  incomeAmount$: Observable<number> = this.store.select(
-    ExpensesSelectors.selectTotalIncome
-  );
-
-  expenses$ = this.store.select(ExpensesSelectors.selectAllExpenses);
 
   getAllTransactionsByCategoryId(id: number) {
     return this.store.select(
