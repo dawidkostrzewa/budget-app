@@ -19,6 +19,17 @@
   color: green;
 }
 
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  &--end {
+    justify-content: flex-end;
+  }
+}
+
 mat-divider {
   margin: 50px 0;
 }

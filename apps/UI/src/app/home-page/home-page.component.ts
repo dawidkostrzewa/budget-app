@@ -4,7 +4,7 @@ import { BudgetFacade } from './+state/Budget/budget.facade';
 import { ApiService } from '../api/api.service';
 import { CategoryFacade } from './+state/Category/category.facade';
 import { TransactionsService } from './+state/Transactions/transactions.service';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { CategoryAmountSummary } from './+state/Category/category.model';
 import { Store } from '@ngrx/store';
 import { BudgetActions } from './+state/Budget/budget.actions';
@@ -13,9 +13,26 @@ import { BudgetActions } from './+state/Budget/budget.actions';
   selector: 'app-home-page',
   template: `
     <main>
+      <div
+        class="navigation"
+        [ngClass]="(currentMonth$ | async) === 0 ? 'navigation--end' : ''"
+      >
+        <button
+          *ngIf="(currentMonth$ | async) !== 0"
+          (click)="goToPrevMonth()"
+          mat-stroked-button
+        >
+          Poprzedni miesiąc
+        </button>
+        <button
+          *ngIf="(currentMonth$ | async) !== 11"
+          (click)="goToNextMonth()"
+          mat-stroked-button
+        >
+          Następny miesiąc
+        </button>
+      </div>
       <h2>{{ currentMonth$ | async | monthToName }} {{ currentYear }}</h2>
-      <button (click)="goToPrevMonth()">Poprzedni miesiąc</button>
-      <button (click)="goToNextMonth()">Następny miesiąch</button>
       <div class="summary-cards">
         <mat-card class="color-green">
           <mat-card-title>Wpływy</mat-card-title>
@@ -60,10 +77,6 @@ import { BudgetActions } from './+state/Budget/budget.actions';
         </mat-tab-group>
       </div>
       <mat-divider></mat-divider>
-      <div>
-        <h2>Wpływy</h2>
-        <div>Suma: {{ incomeAmount$ | async | price }}</div>
-      </div>
     </main>
   `,
   styleUrls: ['./home-page.component.scss'],
@@ -71,9 +84,7 @@ import { BudgetActions } from './+state/Budget/budget.actions';
 })
 export class HomePageComponent implements OnInit {
   private readonly today = new Date();
-  currentMonth$ = this.budgetFacade.currentMonth$.pipe(
-    tap((x) => console.log(x))
-  );
+  currentMonth$ = this.budgetFacade.currentMonth$;
   currentYear = this.today.getFullYear();
 
   expensesAmount$: Observable<number> | undefined;
@@ -128,9 +139,19 @@ export class HomePageComponent implements OnInit {
   }
 
   goToNextMonth() {
-    this.store.dispatch(BudgetActions.showNextMonth());
+    this.budgetFacade.currentMonth$.pipe(take(1)).subscribe((month) => {
+      console.log('sub1');
+      if (month !== 11) {
+        this.store.dispatch(BudgetActions.showNextMonth());
+      }
+    });
   }
   goToPrevMonth() {
-    this.store.dispatch(BudgetActions.showPrevMonth());
+    this.budgetFacade.currentMonth$.pipe(take(1)).subscribe((month) => {
+      console.log('sub2');
+      if (month !== 0) {
+        this.store.dispatch(BudgetActions.showPrevMonth());
+      }
+    });
   }
 }
