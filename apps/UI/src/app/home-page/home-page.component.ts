@@ -149,7 +149,6 @@ export class HomePageComponent implements OnInit {
 
   goToNextMonth() {
     this.budgetFacade.currentMonth$.pipe(take(1)).subscribe((month) => {
-      console.log('sub1');
       if (month !== 11) {
         this.store.dispatch(BudgetActions.showNextMonth());
       }
@@ -157,7 +156,6 @@ export class HomePageComponent implements OnInit {
   }
   goToPrevMonth() {
     this.budgetFacade.currentMonth$.pipe(take(1)).subscribe((month) => {
-      console.log('sub2');
       if (month !== 0) {
         this.store.dispatch(BudgetActions.showPrevMonth());
       }
