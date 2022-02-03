@@ -1,9 +1,9 @@
 import { Budget } from '@budgetapp/budget-models';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import { BudgetActions } from '../Budget/budget.actions';
-import { getCurrentMonth } from '../../../utils/date.utils';
-import { SettingsActions } from '../../../settings/settings.actions';
+import { BudgetActions } from './budget.actions';
+import { getCurrentMonth } from '../utils/date.utils';
+import { SettingsActions } from '../settings/settings.actions';
 
 export const BUDGET_FEATURE = 'budget';
 

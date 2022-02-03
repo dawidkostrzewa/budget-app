@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
-import { ApiService } from '../../../api/api.service';
-import { SettingsActions } from '../../../settings/settings.actions';
+import { ApiService } from '../api/api.service';
+import { SettingsActions } from '../settings/settings.actions';
 import { BudgetActions } from './budget.actions';
 
 @Injectable()

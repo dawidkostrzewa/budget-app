@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { BudgetFacade } from './+state/Budget/budget.facade';
+import { BudgetFacade } from '../budget/budget.facade';
 import { map, switchMap, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { BudgetActions } from './+state/Budget/budget.actions';
-import { CategoryAmountSummary } from './+state/Budget/budget.models';
+import { BudgetActions } from '../budget/budget.actions';
+import { CategoryAmountSummary } from '../budget/budget.models';
 
 @Component({
   selector: 'app-home-page',
