@@ -1,22 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TransactionsService } from '../home-page/+state/Transactions/transactions.service';
 
 @Component({
   selector: 'app-sidebar',
   template: `<aside>
-    <h2 class="sidebar-title">Ostatnie 3 transakcje</h2>
+    <h2 class="sidebar-title">Top 5 transakcji</h2>
     <mat-list>
-      <ng-container
-        *ngFor="
-          let transaction of (
-            transactionService.getTransactionsWithCategories() | async
-          )?.slice(0, 3)
-        "
-      >
-        <mat-list-item
-          >{{ transaction.amount }} PLN - {{ transaction.mainCategoryName }}
-          {{ transaction.date }}</mat-list-item
-        >
+      <ng-container *ngFor="let transaction of [1, 2, 3]">
+        <mat-list-item>{{ transaction }}</mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
     </mat-list>
@@ -24,6 +14,4 @@ import { TransactionsService } from '../home-page/+state/Transactions/transactio
   styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent {
-  constructor(public readonly transactionService: TransactionsService) {}
-}
+export class SidebarComponent {}

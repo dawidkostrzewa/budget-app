@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
 import { BudgetFacade } from './+state/Budget/budget.facade';
-import { ApiService } from '../api/api.service';
-import { CategoryFacade } from './+state/Category/category.facade';
-import { TransactionsService } from './+state/Transactions/transactions.service';
 import { map, switchMap, take } from 'rxjs/operators';
-import { CategoryAmountSummary } from './+state/Category/category.model';
 import { Store } from '@ngrx/store';
 import { BudgetActions } from './+state/Budget/budget.actions';
+import { CategoryAmountSummary } from './+state/Budget/budget.models';
 
 @Component({
   selector: 'app-home-page',
@@ -35,46 +32,60 @@ import { BudgetActions } from './+state/Budget/budget.actions';
       <h2>{{ currentMonth$ | async | monthToName }} {{ currentYear }}</h2>
       <div class="summary-cards">
         <mat-card class="color-green">
-          <mat-card-title>Wpływy</mat-card-title>
-          <mat-card-content>
-            <span class="summary-cards__content">{{
-              incomeAmount$ | async | price
-            }}</span></mat-card-content
-          >
+          <ng-container *ngIf="(isLoading$ | async) === false">
+            <mat-card-title>Wpływy</mat-card-title>
+            <mat-card-content>
+              <span class="summary-cards__content">{{
+                incomeAmount$ | async | price
+              }}</span></mat-card-content
+            >
+          </ng-container>
+          <list-content-loader *ngIf="isLoading$ | async"></list-content-loader>
         </mat-card>
 
         <mat-card class="color-red">
-          <mat-card-title>Wydatki</mat-card-title>
-          <mat-card-content>
-            <span class="summary-cards__content">{{
-              expensesAmount$ | async | price
-            }}</span></mat-card-content
-          >
+          <ng-container *ngIf="(isLoading$ | async) === false">
+            <mat-card-title>Wydatki</mat-card-title>
+            <mat-card-content>
+              <span class="summary-cards__content">{{
+                expensesAmount$ | async | price
+              }}</span></mat-card-content
+            >
+          </ng-container>
+          <list-content-loader *ngIf="isLoading$ | async"></list-content-loader>
         </mat-card>
         <mat-card
           [ngClass]="(result$ | async)! > 0 ? 'color-green' : 'color-red'"
         >
-          <mat-card-title>Do wydania pozostało:</mat-card-title>
-          <mat-card-content
-            ><span class="summary-cards__content">{{
-              result$ | async | price
-            }}</span></mat-card-content
-          >
+          <ng-container *ngIf="(isLoading$ | async) === false">
+            <mat-card-title>Do wydania pozostało:</mat-card-title>
+            <mat-card-content
+              ><span class="summary-cards__content">{{
+                result$ | async | price
+              }}</span></mat-card-content
+            >
+          </ng-container>
+          <list-content-loader *ngIf="isLoading$ | async"></list-content-loader>
         </mat-card>
       </div>
       <mat-divider></mat-divider>
       <div>
         <h2>Wydatki</h2>
-        <mat-tab-group>
-          <mat-tab
-            *ngFor="let cat of mainCategories$ | async as mainCategories"
-            [label]="cat"
-          >
-            <app-category-transactions
-              [summary]="(getSummary(cat) | async) || []"
-            ></app-category-transactions>
-          </mat-tab>
-        </mat-tab-group>
+        <ng-container *ngIf="(isLoading$ | async) === false">
+          <mat-tab-group>
+            <mat-tab
+              *ngFor="let cat of mainCategories$ | async as mainCategories"
+              [label]="cat"
+            >
+              <app-category-transactions
+                [summary]="(getSummary(cat) | async) || []"
+              ></app-category-transactions>
+            </mat-tab>
+          </mat-tab-group>
+        </ng-container>
+        <app-table-content-loader
+          *ngIf="isLoading$ | async"
+        ></app-table-content-loader>
       </div>
       <mat-divider></mat-divider>
     </main>
@@ -90,14 +101,12 @@ export class HomePageComponent implements OnInit {
   expensesAmount$: Observable<number> | undefined;
   incomeAmount$: Observable<number> | undefined;
   result$: Observable<number> = of(0);
+  isLoading$ = this.budgetFacade.isLoading$;
 
   mainCategories$: Observable<string[]> = of([]);
 
   constructor(
     public readonly budgetFacade: BudgetFacade,
-    public readonly categoryFacade: CategoryFacade,
-    public readonly transactionService: TransactionsService,
-    public readonly apiService: ApiService,
     private readonly store: Store
   ) {}
 

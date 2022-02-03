@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryAmountSummary } from '../+state/Category/category.model';
-import { TransactionWithCategoryName } from '../+state/Transactions/transaction.model';
+import { CategoryAmountSummary } from '../+state/Budget/budget.models';
 
 //TODO add sorting/pagination
 @Component({
@@ -24,9 +23,6 @@ import { TransactionWithCategoryName } from '../+state/Transactions/transaction.
   styleUrls: ['./category-transactions.component.scss'],
 })
 export class CategoryTransactionsComponent {
-  @Input()
-  transactions: TransactionWithCategoryName[] | null = [];
-
   @Input()
   summary: CategoryAmountSummary[] = [];
 

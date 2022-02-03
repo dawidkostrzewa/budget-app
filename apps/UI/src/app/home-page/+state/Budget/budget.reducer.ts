@@ -3,11 +3,13 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { BudgetActions } from '../Budget/budget.actions';
 import { getCurrentMonth } from '../../../utils/date.utils';
+import { SettingsActions } from '../../../settings/settings.actions';
 
 export const BUDGET_FEATURE = 'budget';
 
 export interface IBudgetState extends EntityState<Budget> {
   currentMonth: number;
+  isLoading: boolean;
 }
 
 export const adapter: EntityAdapter<Budget> = createEntityAdapter<Budget>({
@@ -18,13 +20,20 @@ export const selectors = adapter.getSelectors();
 
 export const budgetInitialState: IBudgetState = adapter.getInitialState({
   currentMonth: getCurrentMonth(),
+  isLoading: true,
 });
 
 const reducer = createReducer(
   budgetInitialState,
 
-  on(BudgetActions.loadBudget, (state, { budget }) => {
-    return adapter.upsertMany(budget, state);
+  // on(BudgetActions.loadBudget, (state, { budget }) => {
+  //   return adapter.upsertMany(budget, state);
+  // }),
+  on(SettingsActions.init, (state) => {
+    return { ...state, isLoading: true };
+  }),
+  on(BudgetActions.bugdetRecived, (state, { budget }) => {
+    return adapter.upsertMany(budget, { ...state, isLoading: false });
   }),
   on(BudgetActions.showNextMonth, (state) => {
     return { ...state, currentMonth: state.currentMonth + 1 };

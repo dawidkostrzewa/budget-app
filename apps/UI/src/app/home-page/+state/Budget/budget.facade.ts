@@ -9,6 +9,10 @@ import { BudgetSelectors } from './budget.selectors';
 export class BudgetFacade {
   constructor(private readonly store: Store) {}
 
+  isLoading$: Observable<boolean> = this.store.select(
+    BudgetSelectors.selectIsLoading
+  );
+
   getExpenses(month: number) {
     return this.store.select(BudgetSelectors.selectCurrentMonthExpenses(month));
   }

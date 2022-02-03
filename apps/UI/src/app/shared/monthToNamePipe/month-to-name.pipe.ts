@@ -6,7 +6,6 @@ import { MonthNumberToNameMap } from '@budgetapp/budget-models';
 })
 export class MonthToNamePipe implements PipeTransform {
   transform(value: number | null | undefined): string {
-    console.log(value);
     if (value !== null && value !== undefined) {
       return MonthNumberToNameMap.get(value)!;
     }

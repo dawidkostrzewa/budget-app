@@ -11,18 +11,12 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { AppMaterialModule } from './app-material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { YearSummaryPageComponent } from './year-summary-page/year-summary-page.component';
-import {
-  transactionsReducer,
-  TRANSTACTIONS_FEATURE,
-} from './home-page/+state/Transactions/transactions.reducer';
+
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryTransactionsComponent } from './home-page/category-transactions/category-transactions.component';
-import {
-  categoriesReducer,
-  CATEGORIES_FEATURE,
-} from './home-page/+state/Category/category.reducer';
+
 import {
   budgetReducer,
   BUDGET_FEATURE,
@@ -30,6 +24,9 @@ import {
 
 import { PricePipe } from './shared/pricePipe/price.pipe';
 import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
+import { BudgetEffects } from './home-page/+state/Budget/budget.effect';
+import { ContentLoaderModule } from '@ngneat/content-loader';
+import { TableContentLoaderComponent } from './shared/table-content-loader/table-content-loader.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +38,7 @@ import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
     CategoryTransactionsComponent,
     PricePipe,
     MonthToNamePipe,
+    TableContentLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,9 +46,8 @@ import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
+    ContentLoaderModule,
     StoreModule.forRoot({
-      [TRANSTACTIONS_FEATURE]: transactionsReducer,
-      [CATEGORIES_FEATURE]: categoriesReducer,
       [BUDGET_FEATURE]: budgetReducer,
     }),
     EffectsModule.forRoot(),
@@ -60,7 +57,7 @@ import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
       logOnly: environment.production,
     }),
     // StoreModule.forFeature(TRANSTACTIONS_FEATURE, transactionsReducer),
-    EffectsModule.forFeature([]),
+    EffectsModule.forFeature([BudgetEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

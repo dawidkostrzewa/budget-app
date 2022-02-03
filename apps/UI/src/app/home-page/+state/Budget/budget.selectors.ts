@@ -40,6 +40,11 @@ const selectCurrentMonth = createSelector(
   (state) => state.currentMonth
 );
 
+const selectIsLoading = createSelector(
+  selectBudgetState,
+  ({ isLoading }) => isLoading
+);
+
 export const BudgetSelectors = {
   selectFullBudget,
   selectBudgetByMonth,
@@ -47,4 +52,5 @@ export const BudgetSelectors = {
   selectCurrentMonthTotalIncome,
   selectCurrentMonthTotalExpensesAmount,
   selectCurrentMonth,
+  selectIsLoading,
 };
