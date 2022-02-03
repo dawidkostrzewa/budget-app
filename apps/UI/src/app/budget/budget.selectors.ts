@@ -45,6 +45,17 @@ const selectIsLoading = createSelector(
   ({ isLoading }) => isLoading
 );
 
+const selectTop10Expenses = (month: number) =>
+  createSelector(selectBudgetByMonth(month), (budget) => {
+    const allSubCategories = budget?.expenses
+      .map(({ subCategories }) => subCategories)
+      .flat();
+    const top10 = allSubCategories
+      ?.sort((a, b) => b.real - a.real)
+      .slice(0, 10);
+    return top10 || [];
+  });
+
 export const BudgetSelectors = {
   selectFullBudget,
   selectBudgetByMonth,
@@ -53,4 +64,5 @@ export const BudgetSelectors = {
   selectCurrentMonthTotalExpensesAmount,
   selectCurrentMonth,
   selectIsLoading,
+  selectTop10Expenses,
 };

@@ -29,6 +29,10 @@ export class BudgetFacade {
     );
   }
 
+  getTop10Expenses(month: number) {
+    return this.store.select(BudgetSelectors.selectTop10Expenses(month));
+  }
+
   currentMonth$: Observable<number> = this.store.select(
     BudgetSelectors.selectCurrentMonth
   );
