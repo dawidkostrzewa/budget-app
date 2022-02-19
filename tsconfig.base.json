@@ -20,6 +20,7 @@
       "@budgetapp/budget-ui/data-access": [
         "libs/budget-ui/data-access/src/index.ts"
       ],
+      "@budgetapp/budget-ui/util": ["libs/budget-ui/util/src/index.ts"],
       "@budgetapp/shared/budget-models": [
         "libs/shared/budget-models/src/index.ts"
       ]
