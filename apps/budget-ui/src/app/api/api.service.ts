@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BudgetResponse } from '@budgetapp/budget-models';
+import { BudgetResponse } from '@budgetapp/shared/budget-models';
 
 @Injectable({
   providedIn: 'root',

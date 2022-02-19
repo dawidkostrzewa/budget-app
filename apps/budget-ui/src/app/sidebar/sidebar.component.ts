@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SingleCategory } from '@budgetapp/budget-models';
+import { SingleCategory } from '@budgetapp/shared/budget-models';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BudgetFacade } from '../budget/budget.facade';

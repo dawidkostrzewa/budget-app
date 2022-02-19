@@ -1,4 +1,4 @@
-import { BudgetResponse } from '@budgetapp/budget-models';
+import { BudgetResponse } from '@budgetapp/shared/budget-models';
 import { createAction, props } from '@ngrx/store';
 
 const loadBudget = createAction('[API] Load Budget', props<BudgetResponse>());

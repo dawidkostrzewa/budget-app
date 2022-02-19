@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { MonthNumberToNameMap } from '@budgetapp/budget-models';
+import { MonthNumberToNameMap } from '@budgetapp/shared/budget-models';
 
 @Pipe({
   name: 'monthToName',
