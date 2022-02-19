@@ -1,0 +1,23 @@
+{
+  "root": "libs/shared/budget-models",
+  "sourceRoot": "libs/shared/budget-models/src",
+  "projectType": "library",
+  "architect": {
+    "lint": {
+      "builder": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/budget-models/**/*.ts"]
+      }
+    },
+    "test": {
+      "builder": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/budget-models"],
+      "options": {
+        "jestConfig": "libs/shared/budget-models/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

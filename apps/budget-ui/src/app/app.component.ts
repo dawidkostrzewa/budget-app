@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { SettingsActions } from '@budgetapp/budget-ui/data-access';
 import { Store } from '@ngrx/store';
-import { SettingsActions } from './settings/settings.actions';
 
 @Component({
   selector: 'app-root',

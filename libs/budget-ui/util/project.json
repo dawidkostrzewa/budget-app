@@ -1,0 +1,23 @@
+{
+  "root": "libs/budget-ui/util",
+  "sourceRoot": "libs/budget-ui/util/src",
+  "projectType": "library",
+  "architect": {
+    "lint": {
+      "builder": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/budget-ui/util/**/*.ts"]
+      }
+    },
+    "test": {
+      "builder": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/budget-ui/util"],
+      "options": {
+        "jestConfig": "libs/budget-ui/util/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
