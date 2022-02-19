@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryAmountSummary } from '../../budget/budget.models';
+import { CategoryAmountSummary } from '@budgetapp/budget-ui/data-access';
 
 //TODO add sorting/pagination
 @Component({

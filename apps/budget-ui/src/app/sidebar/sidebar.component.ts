@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BudgetFacade } from '@budgetapp/budget-ui/data-access';
 import { SingleCategory } from '@budgetapp/shared/budget-models';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { BudgetFacade } from '../budget/budget.facade';
 
 @Component({
   selector: 'app-sidebar',

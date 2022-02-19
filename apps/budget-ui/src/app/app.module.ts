@@ -14,12 +14,16 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryTransactionsComponent } from './home-page/category-transactions/category-transactions.component';
-import { budgetReducer, BUDGET_FEATURE } from './budget/budget.reducer';
+import {
+  budgetReducer,
+  BUDGET_FEATURE,
+} from '../../../../libs/budget-ui/data-access/src/lib/budget/budget.reducer';
 import { PricePipe } from './shared/pricePipe/price.pipe';
 import { MonthToNamePipe } from './shared/monthToNamePipe/month-to-name.pipe';
-import { BudgetEffects } from './budget/budget.effect';
+import { BudgetEffects } from '../../../../libs/budget-ui/data-access/src/lib/budget/budget.effect';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 import { TableContentLoaderComponent } from './shared/table-content-loader/table-content-loader.component';
+import { BudgetUiDataAccessModule } from '@budgetapp/budget-ui/data-access';
 
 @NgModule({
   declarations: [
@@ -40,17 +44,24 @@ import { TableContentLoaderComponent } from './shared/table-content-loader/table
     BrowserAnimationsModule,
     AppMaterialModule,
     ContentLoaderModule,
-    StoreModule.forRoot({
-      [BUDGET_FEATURE]: budgetReducer,
-    }),
-    EffectsModule.forRoot(),
+    BudgetUiDataAccessModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       name: 'BudgetApp',
       logOnly: environment.production,
     }),
-    // StoreModule.forFeature(TRANSTACTIONS_FEATURE, transactionsReducer),
-    EffectsModule.forFeature([BudgetEffects]),
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers: !environment.production ? [] : [],
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+        },
+      }
+    ),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

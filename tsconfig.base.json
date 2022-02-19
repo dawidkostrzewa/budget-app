@@ -17,6 +17,9 @@
     "module": "es2020",
     "lib": ["es2019", "dom"],
     "paths": {
+      "@budgetapp/budget-ui/data-access": [
+        "libs/budget-ui/data-access/src/index.ts"
+      ],
       "@budgetapp/shared/budget-models": [
         "libs/shared/budget-models/src/index.ts"
       ]

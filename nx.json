@@ -14,5 +14,16 @@
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   },
-  "defaultProject": "UI"
+  "defaultProject": "budget-ui",
+  "generators": {
+    "@nrwl/angular:application": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {}
+  }
 }

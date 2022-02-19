@@ -50,3 +50,4 @@ token.json
 google-auth.json
 
 .env
+.angular
