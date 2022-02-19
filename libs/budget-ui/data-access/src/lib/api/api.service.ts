@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BudgetResponse } from '@budgetapp/shared/budget-models';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ApiService {
   constructor(private readonly http: HttpClient) {}
 
