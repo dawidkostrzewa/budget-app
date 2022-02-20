@@ -20,6 +20,19 @@
       "@budgetapp/budget-ui/data-access": [
         "libs/budget-ui/data-access/src/index.ts"
       ],
+      "@budgetapp/budget-ui/feature-header": [
+        "libs/budget-ui/feature-header/src/index.ts"
+      ],
+      "@budgetapp/budget-ui/feature-main": [
+        "libs/budget-ui/feature-main/src/index.ts"
+      ],
+      "@budgetapp/budget-ui/feature-sidebar": [
+        "libs/budget-ui/feature-sidebar/src/index.ts"
+      ],
+      "@budgetapp/budget-ui/feature-year-summary-page": [
+        "libs/budget-ui/feature-year-summary-page/src/index.ts"
+      ],
+      "@budgetapp/budget-ui/shared": ["libs/budget-ui/shared/src/index.ts"],
       "@budgetapp/budget-ui/util": ["libs/budget-ui/util/src/index.ts"],
       "@budgetapp/shared/budget-models": [
         "libs/shared/budget-models/src/index.ts"

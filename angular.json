@@ -1,10 +1,15 @@
 {
-  "version": 1,
+  "version": 2,
   "projects": {
     "budget-backend": "apps/budget-backend",
-    "budget-ui-data-access": "libs/budget-ui/data-access",
     "budget-models": "libs/shared/budget-models",
     "budget-ui": "apps/budget-ui",
+    "budget-ui-data-access": "libs/budget-ui/data-access",
+    "budget-ui-feature-header": "libs/budget-ui/feature-header",
+    "budget-ui-feature-main": "libs/budget-ui/feature-main",
+    "budget-ui-feature-sidebar": "libs/budget-ui/feature-sidebar",
+    "budget-ui-feature-year-summary-page": "libs/budget-ui/feature-year-summary-page",
+    "budget-ui-shared": "libs/budget-ui/shared",
     "budget-ui-util": "libs/budget-ui/util"
   }
 }

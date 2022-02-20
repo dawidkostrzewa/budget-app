@@ -7,8 +7,8 @@ import {
   SheetNameMap,
   ValueRenderOption,
 } from '../../models/Sheets.model';
-import { Budget, BudgetCategory } from '@budgetapp/shared/budget-models';
 
+import { Budget, BudgetCategory } from '@budgetapp/shared/budget-models';
 const keys = require('/google-auth.json');
 
 @Injectable()

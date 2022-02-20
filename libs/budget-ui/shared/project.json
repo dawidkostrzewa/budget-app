@@ -1,14 +1,14 @@
 {
   "projectType": "library",
-  "root": "libs/budget-ui/data-access",
-  "sourceRoot": "libs/budget-ui/data-access/src",
+  "root": "libs/budget-ui/shared",
+  "sourceRoot": "libs/budget-ui/shared/src",
   "prefix": "budgetapp",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/budget-ui/data-access"],
+      "outputs": ["coverage/libs/budget-ui/shared"],
       "options": {
-        "jestConfig": "libs/budget-ui/data-access/jest.config.js",
+        "jestConfig": "libs/budget-ui/shared/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -16,8 +16,8 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "libs/budget-ui/data-access/src/**/*.ts",
-          "libs/budget-ui/data-access/src/**/*.html"
+          "libs/budget-ui/shared/src/**/*.ts",
+          "libs/budget-ui/shared/src/**/*.html"
         ]
       }
     }

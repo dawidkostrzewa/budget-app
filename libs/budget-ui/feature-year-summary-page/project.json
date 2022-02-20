@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/budget-ui/feature-year-summary-page",
+  "sourceRoot": "libs/budget-ui/feature-year-summary-page/src",
+  "prefix": "budgetapp",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/budget-ui/feature-year-summary-page"],
+      "options": {
+        "jestConfig": "libs/budget-ui/feature-year-summary-page/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/budget-ui/feature-year-summary-page/src/**/*.ts",
+          "libs/budget-ui/feature-year-summary-page/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/budget-ui/feature-sidebar",
+  "sourceRoot": "libs/budget-ui/feature-sidebar/src",
+  "prefix": "budgetapp",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/budget-ui/feature-sidebar"],
+      "options": {
+        "jestConfig": "libs/budget-ui/feature-sidebar/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/budget-ui/feature-sidebar/src/**/*.ts",
+          "libs/budget-ui/feature-sidebar/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
