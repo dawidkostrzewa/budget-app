@@ -70,7 +70,6 @@ import {
           <list-content-loader *ngIf="isLoading$ | async"></list-content-loader>
         </mat-card>
       </div>
-      <mat-divider></mat-divider>
       <div>
         <h2>Wydatki</h2>
         <ng-container *ngIf="(isLoading$ | async) === false">
@@ -89,7 +88,6 @@ import {
           *ngIf="isLoading$ | async"
         ></app-table-content-loader>
       </div>
-      <mat-divider></mat-divider>
     </main>
   `,
   styleUrls: ['./home-page.component.scss'],
