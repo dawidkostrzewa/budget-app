@@ -7,6 +7,7 @@
     "budget-ui-data-access": "libs/budget-ui/data-access",
     "budget-ui-feature-header": "libs/budget-ui/feature-header",
     "budget-ui-feature-main": "libs/budget-ui/feature-main",
+    "budget-ui-feature-schedule-month": "libs/budget-ui/feature-schedule-month",
     "budget-ui-feature-sidebar": "libs/budget-ui/feature-sidebar",
     "budget-ui-feature-year-summary-page": "libs/budget-ui/feature-year-summary-page",
     "budget-ui-shared": "libs/budget-ui/shared",

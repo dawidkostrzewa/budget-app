@@ -26,6 +26,9 @@
       "@budgetapp/budget-ui/feature-main": [
         "libs/budget-ui/feature-main/src/index.ts"
       ],
+      "@budgetapp/budget-ui/feature-schedule-month": [
+        "libs/budget-ui/feature-schedule-month/src/index.ts"
+      ],
       "@budgetapp/budget-ui/feature-sidebar": [
         "libs/budget-ui/feature-sidebar/src/index.ts"
       ],

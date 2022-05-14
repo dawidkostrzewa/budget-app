@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/budget-ui/feature-schedule-month",
+  "sourceRoot": "libs/budget-ui/feature-schedule-month/src",
+  "prefix": "budgetapp",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/budget-ui/feature-schedule-month"],
+      "options": {
+        "jestConfig": "libs/budget-ui/feature-schedule-month/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/budget-ui/feature-schedule-month/src/**/*.ts",
+          "libs/budget-ui/feature-schedule-month/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
