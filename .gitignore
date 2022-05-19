@@ -51,3 +51,4 @@ google-auth.json
 
 .env
 .angular
+apps/budget-backend/serviceAccount.json

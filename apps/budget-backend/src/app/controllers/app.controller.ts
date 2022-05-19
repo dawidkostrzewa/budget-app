@@ -1,6 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from '../services/app.service';
 
+import * as firebaseAdmin from 'firebase-admin';
+
+import { getFirestore } from 'firebase-admin/firestore';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
