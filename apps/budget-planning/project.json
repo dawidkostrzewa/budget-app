@@ -1,0 +1,83 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/budget-planning/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/budget-planning",
+        "index": "apps/budget-planning/src/index.html",
+        "baseHref": "/",
+        "main": "apps/budget-planning/src/main.tsx",
+        "polyfills": "apps/budget-planning/src/polyfills.ts",
+        "tsConfig": "apps/budget-planning/tsconfig.app.json",
+        "assets": [
+          "apps/budget-planning/src/favicon.ico",
+          "apps/budget-planning/src/assets"
+        ],
+        "styles": ["apps/budget-planning/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/budget-planning/src/environments/environment.ts",
+              "with": "apps/budget-planning/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "budget-planning:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "budget-planning:build:development"
+        },
+        "production": {
+          "buildTarget": "budget-planning:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/budget-planning/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/budget-planning"],
+      "options": {
+        "jestConfig": "apps/budget-planning/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

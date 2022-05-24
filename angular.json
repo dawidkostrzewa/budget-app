@@ -3,6 +3,8 @@
   "projects": {
     "budget-backend": "apps/budget-backend",
     "budget-models": "libs/shared/budget-models",
+    "budget-planning": "apps/budget-planning",
+    "budget-planning-e2e": "apps/budget-planning-e2e",
     "budget-ui": "apps/budget-ui",
     "budget-ui-data-access": "libs/budget-ui/data-access",
     "budget-ui-feature-header": "libs/budget-ui/feature-header",
