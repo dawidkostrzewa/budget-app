@@ -21,7 +21,6 @@ export class SheetsApiService {
   constructor() {
     console.log('SheetsApiService constructor');
     this.budgetSheets = this.getBudgetSheets();
-    console.log(this.budgetSheets);
   }
 
   get SPREED_SHEET_ID() {
@@ -135,8 +134,6 @@ export class SheetsApiService {
   }
 
   async getFullYearInformation(year: { year: string }) {
-    console.log(this.getBudgetSheets());
-
     if (this.cachedAllExpenses.length) {
       console.log('CACHED');
       // return {
