@@ -10,10 +10,23 @@ import {
 
 import { Budget, BudgetCategory } from '@budgetapp/shared/budget-models';
 const keys = require('/google-auth.json');
+import * as fs from 'fs';
 
 @Injectable()
 export class SheetsApiService {
-  private static SPREED_SHEET_ID = process.env.SPREAD_SHEET;
+  // private static SPREED_SHEET_ID = process.env.SPREAD_SHEET;
+
+  private budgetSheets!: { [key: string]: string };
+
+  constructor() {
+    console.log('SheetsApiService constructor');
+    this.budgetSheets = this.getBudgetSheets();
+    console.log(this.budgetSheets);
+  }
+
+  get SPREED_SHEET_ID() {
+    return this.budgetSheets[new Date().getFullYear()];
+  }
 
   private cachedAllExpenses: Budget[] = [];
 
@@ -29,13 +42,25 @@ export class SheetsApiService {
     auth: this.googleAuthClient,
   });
 
-  constructor() {
-    console.log('SheetsApiService constructor');
+  getBudgetSheets() {
+    try {
+      const sheetsFile = fs.readFileSync(
+        `${__dirname}/assets/budget-sheets.json`,
+        'utf8'
+      );
+      const sheets: {
+        [key: string]: string;
+      } = JSON.parse(sheetsFile);
+      this.budgetSheets = sheets;
+      return sheets;
+    } catch (error) {
+      throw new Error(`${error}`);
+    }
   }
 
   async getCategories() {
     const batchGet = await this.sheets.spreadsheets.values.batchGet({
-      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      spreadsheetId: this.SPREED_SHEET_ID,
       ranges: [AllCategoriesRages.INCOME, AllCategoriesRages.EXPENSES],
       valueRenderOption: ValueRenderOption.FORMATTED_VALUE,
     });
@@ -66,7 +91,7 @@ export class SheetsApiService {
     const {
       data: { values },
     } = await this.sheets.spreadsheets.values.get({
-      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      spreadsheetId: this.SPREED_SHEET_ID,
       range: sheetName,
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });
@@ -89,7 +114,7 @@ export class SheetsApiService {
     const {
       data: { valueRanges },
     } = await this.sheets.spreadsheets.values.batchGet({
-      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      spreadsheetId: this.SPREED_SHEET_ID,
       ranges: [
         `${SheetNameMap.get(month)}${MonthExpensesRages.EXPENSES}`,
         `${SheetNameMap.get(month)}!C77:D78`,
@@ -109,12 +134,14 @@ export class SheetsApiService {
     };
   }
 
-  async getAllInformation() {
+  async getFullYearInformation(year: { year: string }) {
+    console.log(this.getBudgetSheets());
+
     if (this.cachedAllExpenses.length) {
       console.log('CACHED');
-      return {
-        budget: this.cachedAllExpenses,
-      };
+      // return {
+      //   budget: this.cachedAllExpenses,
+      // };
     }
     const ranges = [];
     for (let sheet in SheetName) {
@@ -133,10 +160,12 @@ export class SheetsApiService {
       }
     }
 
+    const sId = this.budgetSheets[year?.year || new Date().getFullYear()];
+
     const {
       data: { valueRanges },
     } = await this.sheets.spreadsheets.values.batchGet({
-      spreadsheetId: SheetsApiService.SPREED_SHEET_ID,
+      spreadsheetId: sId,
       ranges: ranges,
       valueRenderOption: ValueRenderOption.UNFORMATTED_VALUE,
     });

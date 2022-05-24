@@ -21,6 +21,8 @@ export class TransactionController {
 
   @Get('expenses/all')
   getAllExpenses() {
-    return this.sheetService.getAllInformation();
+    return this.sheetService.getFullYearInformation({
+      year: new Date().getFullYear().toString(),
+    });
   }
 }
